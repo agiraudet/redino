@@ -6,31 +6,28 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 00:45:42 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 17:33:23 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/18 19:20:58 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
 
-int		player_collision(char **map, t_obj **objs, t_player *plr, int y, int x)
+int		player_collision(char **map, t_obj *objs, t_player *plr, int y, int x)
 {
-	int		i;
-
-	i = 0;
-	while (objs[i])
+	while (objs)
 	{
-		if (objs[i]->ctl && objs[i]->ctl->coll)
-			if (objs[i]->x == x && objs[i]->y == y)
-				if (objs[i]->ctl->coll(objs[i], plr) == 0)
+		if (objs->ctl && objs->ctl->coll)
+			if (objs->x == x && objs->y == y)
+				if (objs->ctl->coll(objs, plr) == 0)
 					return (0);
-		i++;
+		objs = objs->next;
 	}
 	if (map[y][x] != '.')
 		return (0);
 	return (1);
 }
 
-int		player_move(char **map, t_obj **objs, t_player *plr)
+int		player_move(char **map, t_obj *objs, t_player *plr)
 {
 	char	ch;
 

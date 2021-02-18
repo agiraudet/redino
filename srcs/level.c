@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 15:07:37 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 18:44:55 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/18 22:02:20 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	level_plr_destroy(t_player *plr)
 	free(plr);
 }
 
-t_obj	*level_obj_init2()
+t_obj	*level_obj_init()
 {
 	t_obj	*obj_lst;
 	t_obj	*obj_tmp;
@@ -41,6 +41,10 @@ t_obj	*level_obj_init2()
 	obj_tmp = object_create("O", PORTAL, 3, 3, BLUE, ACT, ctl_tmp);
 	object_add(&obj_lst, obj_tmp);
 
+	ctl_tmp = ctl_create(0, &obj_portal_coll, 0, 0, 0);
+	obj_tmp = object_create("O", PORTAL, 8, 4, GREEN, ACT, ctl_tmp);
+	object_add(&obj_lst, obj_tmp);
+
 	ctl_tmp = ctl_create(&obj_lever_act, 0, 0, &obj_lever_update, 1);
 	obj_tmp = object_create("/", LEVER, 20, 4, GREEN, DEACT, ctl_tmp);
 	object_add(&obj_lst, obj_tmp);
@@ -49,38 +53,11 @@ t_obj	*level_obj_init2()
 	obj_tmp = object_create("-", DOOR, 29, 4, NONE, DEACT, ctl_tmp);
 	object_add(&obj_lst, obj_tmp);
 
+	ctl_build_all(obj_lst);
 	return (obj_lst);
 }
 
-
-t_obj		**level_obj_init()
-{
-	t_obj	**objs;
-	t_ctl		*ctl;
-	int			nb_obj = 9;
-	int			i;
-
-	objs = malloc(sizeof(t_obj*) * (nb_obj + 1));
-	i = 0;
-	ctl = ctl_create(0, &obj_portal_coll, 0, 0, 0);
-	objs[i++] = object_create("O", PORTAL, 3, 3, BLUE, ACT, ctl);
-	objs[i++] = object_create("O", PORTAL, 8, 8, RED, ACT, ctl);
-	objs[i++] = object_create("O", PORTAL, 8, 4, GREEN, ACT, ctl);
-	objs[i++] = object_create("O", PORTAL, 5, 2, WHITE, ACT, ctl);
-	ctl = ctl_create(0, &obj_spike_coll, 0, 0, 0);
-	objs[i++] = object_create(".", SPIKE, 26, 7, RED, ACT, ctl);
-	objs[i++] = object_create(".", SPIKE, 27, 7, RED, ACT, ctl);
-	objs[i++] = object_create(".", SPIKE, 28, 7, RED, ACT, ctl);
-	ctl = ctl_create(&obj_lever_act, 0, 0, &obj_lever_update, 1);
-	objs[i++] = object_create("/", LEVER, 20, 4, GREEN, DEACT, ctl);
-	ctl = ctl_create(0, &obj_door_coll, &logic_and, &obj_door_update, 1);
-	objs[i++] = object_create("-", DOOR, 29, 4, NONE, DEACT, ctl);
-	objs[i] = 0;
-	ctl_build_all(objs);
-	return (objs);
-}
-
-void		level_obj_destroy2(t_obj *obj_lst)
+void		level_obj_destroy(t_obj *obj_lst)
 {
 	t_obj	*tmp;
 
@@ -91,17 +68,6 @@ void		level_obj_destroy2(t_obj *obj_lst)
 		obj_lst = tmp;
 	}
 }
-
-void		level_obj_destroy(t_obj **objs)
-{
-	int		i;
-
-	i = 0;
-	while (objs[i])
-		object_destroy(objs[i++]);
-	free(objs);
-}
-
 
 char		**level_map_init(int size_x, int size_y)
 {
@@ -140,6 +106,7 @@ void	level_map_destroy(char **map)
 
 t_level		*level_load()
 {
+	return (mson_parse_file("srcs/mson/lvl1.mson"));
 	t_level *lvl;
 
 	if (!(lvl = malloc(sizeof(t_level))))

@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 00:45:29 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 18:45:26 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/18 19:20:02 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	object_destroy(t_obj *obj)
 	free(obj);
 }
 
-void	object_update2(t_obj *obj_lst)
+void	object_update(t_obj *obj_lst)
 {
 	while (obj_lst)
 	{
@@ -51,38 +51,12 @@ void	object_update2(t_obj *obj_lst)
 	}
 }
 
-void	object_update(t_obj **objs)
-{
-	int		i;
-
-	i = 0;
-	while (objs[i])
-	{
-		if (objs[i]->ctl && objs[i]->ctl->update)
-			objs[i]->ctl->update(objs[i]);
-		i++;
-	}
-}
-
-void	object_act2(t_obj *obj_lst, t_player *plr)
+void	object_act(t_obj *obj_lst, t_player *plr)
 {
 	while (obj_lst)
 	{
 		if (obj_lst->ctl && obj_lst->ctl->act)
 			obj_lst->ctl->act(obj_lst, plr);
 		obj_lst = obj_lst->next;
-	}
-}
-
-void	object_act(t_obj **objs, t_player *plr)
-{
-	int		i;
-
-	i = 0;
-	while (objs[i])
-	{
-		if (objs[i]->ctl && objs[i]->ctl->act)
-			objs[i]->ctl->act(objs[i], plr);
-		i++;
 	}
 }

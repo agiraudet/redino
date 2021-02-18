@@ -1,12 +1,24 @@
-wwwwwwwwwwwwwwwwwwwwwwwwwww
-w.........................w
-w.........................w
-w.........................w
-w.........................w
-w.........................w
-w.........................w
-wwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwww
+w......................w
+w......................w
+w......................www
+w........................w
+w........................w
+w........................w
+w......................www
+w......................w
+w......................w
+wwwwwwwwwwwwwwwwwwwwwwww
 
-C ctl1 0 c 0 0 0
-O portal O 3 3 blue act ctl1
-P player 
+#mode:  &act	&coll	&update
+#		 4		 2		  1
+
+#obj
+#ID	type	chr	x	y	color	status	group	mode	logic
+O	portal	O	3	3	green	0		0		2		none
+O	lever	/	6	6	green	0		1		5		none
+O	door	-	25	5	none	0		1		3		AND
+
+#player
+#ID	type	chr	x	y	color
+P	player	P	5	5	white

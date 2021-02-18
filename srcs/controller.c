@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 03:35:48 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 17:28:32 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/18 19:22:07 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,47 +39,49 @@ void	ctl_destroy(t_ctl *ctl)
 	free(ctl);
 }
 
-t_obj	**ctl_build_parent(t_obj *self, t_obj **objs)
+int		ctl_count_parent(t_obj *self, t_obj *objs)
 {
-	t_obj **ret;
-	int		i;
 	int		nb_parent;
 
-	i = 0;
 	nb_parent = 0;
-	while (objs[i])
+	while (objs)
 	{
-		if (objs[i]->ctl)
-			if (objs[i]->ctl->group == self->ctl->group)
-				if (objs[i] != self)
-					nb_parent++;
-		i++;
+		if (objs->ctl && objs->ctl->group == self->ctl->group && objs != self)
+			nb_parent++;
+		objs = objs->next;
 	}
-	if (!(ret = malloc(sizeof(t_obj*))))
-		return (0);
-	i = 0;
-	nb_parent = 0;
-	while (objs[i])
-	{
-		if (objs[i]->ctl)
-			if (objs[i]->ctl->group == self->ctl->group)
-				if (objs[i] != self)
-					ret[nb_parent++] = objs[i];
-		i++;
-	}
-	ret[nb_parent] = 0;
-	return (ret);
+	return (nb_parent);
 }
 
-void	ctl_build_all(t_obj **objs)
+t_obj	**ctl_build_parent(t_obj *self, t_obj *objs)
 {
+	t_obj	**parent;
+	int		nb_parent;
 	int		i;
 
+	nb_parent = ctl_count_parent(self, objs);
+	if (!(parent = malloc(sizeof(t_obj*) * (nb_parent + 1))))
+		return (0);
 	i = 0;
-	while (objs[i])
+	while (objs)
 	{
-		if (objs[i]->ctl && objs[i]->ctl->group != 0)
-			objs[i]->ctl->parent = ctl_build_parent(objs[i], objs);
-		i++;
+		if (objs->ctl && objs->ctl->group == self->ctl->group && objs != self)
+			parent[i++] = objs;
+		objs = objs->next;
+	}
+	parent[i] = 0;
+	return (parent);
+}
+
+void	ctl_build_all(t_obj *objs)
+{
+	t_obj	*obj_list;
+
+	obj_list = objs;
+	while (objs)
+	{
+		if (objs->ctl && objs->ctl->group != 0)
+			objs->ctl->parent = ctl_build_parent(objs, obj_list);
+		objs = objs->next;
 	}
 }

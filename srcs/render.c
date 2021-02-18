@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 17:03:15 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 17:37:00 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/18 18:57:50 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,14 @@ void	render_map(char **map)
 	}
 }
 
-void	render_objs(t_obj **objs)
+void	render_objs(t_obj *objs)
 {
-	int		i;
-
-	i = 0;
-	while (objs[i])
+	while (objs)
 	{
-		attron(COLOR_PAIR(objs[i]->color));
-		mvprintw(objs[i]->y, objs[i]->x, objs[i]->chr);
-		attroff(COLOR_PAIR(objs[i]->color));
-		i++;
+		attron(COLOR_PAIR(objs->color));
+		mvprintw(objs->y, objs->x, objs->chr);
+		attroff(COLOR_PAIR(objs->color));
+		objs = objs->next;
 	}
 }
 

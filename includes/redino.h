@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 22:42:27 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 18:23:37 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/18 22:01:19 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <ncurses.h>
 # include <stdlib.h>
+# include <string.h>
+# include <fcntl.h>
 
 #define NONE 0
 # define RED 1
@@ -61,12 +63,11 @@ typedef struct		s_ctl
 	int				(*logic)(int, int);
 	void			(*update)(t_obj*);
 	int				group;
-	int				mode;
 }					t_ctl;
 
 typedef struct		s_level
 {
-	t_obj			**objs;
+	t_obj			*objs;
 	char			**map;
 	t_player		*plr;
 }					t_level;
@@ -76,6 +77,9 @@ int					win(void);
 
 /* INIT */
 void				init_ncurse(void);
+
+/* UTILS */
+char				**ft_nsplit(const char *str, const char *sep);
 
 /* RENDER */
 void				render_level(t_level *lvl);
@@ -96,29 +100,44 @@ int					logic_nand(int parent_up, int parent_total);
 t_obj				*object_create
 					(char *chr, int type, int x, int y, int color, int status, t_ctl *ctl);
 void				object_destroy(t_obj *obj);
-void				object_update(t_obj **obj);
-void				object_act(t_obj **obj, t_player *plr);
+void				object_update(t_obj *obj);
+void				object_act(t_obj *obj, t_player *plr);
+void				object_add(t_obj **obj_lst, t_obj *obj);
 
 /* PLAYER */
-int					player_collision(char **map, t_obj **objs, t_player *plr, int y, int x);
-int					player_move(char **map, t_obj **obj, t_player *plr);
+int					player_collision(char **map, t_obj *objs, t_player *plr, int y, int x);
+int					player_move(char **map, t_obj *obj, t_player *plr);
 
 /* CONTROLLER */
 t_ctl				*ctl_create
 					(void (*act)(t_obj*, t_player *plr), int (*coll)(t_obj*, t_player*),
 					 int (*logic)(int, int), void (*update)(t_obj*), int group);
 void				ctl_destroy(t_ctl *ctl);
-void				ctl_build_all(t_obj **objs);
+void				ctl_build_all(t_obj *objs);
 
 /* OBJS */
-int					obj_door_coll(t_obj *self, t_player *plr);
-void				obj_door_update(t_obj *self);
+void		obj_door_init_fct(t_ctl *ctl, int fct);
+void		obj_lever_init_fct(t_ctl *ctl, int fct);
+void		obj_portal_init_fct(t_ctl *ctl, int fct);
+void		obj_spike_init_fct(t_ctl *ctl, int fct);
 
-void				obj_lever_act(t_obj *self, t_player *plr);
-void				obj_lever_update(t_obj *self);
+t_level		*mson_parse_file(char *file);
 
-int					obj_portal_coll(t_obj *self, t_player *plr);
 
-int					obj_spike_coll(t_obj *self, t_player *plr);
+
+void		obj_door_act(t_obj *self, t_player *plr);
+int		obj_door_coll(t_obj *self, t_player *plr);
+void		obj_door_update(t_obj *self);
+void		obj_lever_act(t_obj *self, t_player *plr);
+int		obj_lever_coll(t_obj *self, t_player *plr);
+void		obj_lever_update(t_obj *self);
+void		obj_portal_act(t_obj *self, t_player *plr);
+int		obj_portal_coll(t_obj *self, t_player *plr);
+void		obj_portal_update(t_obj *self);
+void		obj_spike_act(t_obj *self, t_player *plr);
+int		obj_spike_coll(t_obj *self, t_player *plr);
+void		obj_spike_update(t_obj *self);
+
+
 
 #endif

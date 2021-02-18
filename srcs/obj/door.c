@@ -6,11 +6,17 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 13:42:58 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 17:36:09 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/18 21:19:49 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
+
+void	obj_door_act(t_obj *self, t_player *plr)
+{
+	(void)self;
+	(void)plr;
+}
 
 int		obj_door_coll(t_obj *self, t_player *plr)
 {
@@ -44,4 +50,14 @@ void	obj_door_update(t_obj *self)
 		self->status = DEACT;
 		self->color = BG_BLACK;
 	}
+}
+
+void	obj_door_init_fct(t_ctl *ctl, int fct)
+{
+	if (fct & 4)
+		ctl->act = &obj_door_act;
+	if (fct & 2)
+		ctl->coll = &obj_door_coll;
+	if (fct & 1)
+		ctl->update = &obj_door_update;
 }
