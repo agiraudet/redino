@@ -1,60 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   spike.c                                            :+:      :+:    :+:   */
+/*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 14:01:13 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 23:45:51 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/18 23:24:30 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
 
-void	obj_spike_act(t_obj *self, t_player *plr)
+void	obj_check_act(t_obj *self, t_player *plr)
 {
 	(void)self;
 	(void)plr;
 }
 
-int		obj_spike_coll(t_obj *self, t_player *plr)
+int		obj_check_coll(t_obj *self, t_player *plr)
 {
-	(void)plr;
-	if (self->status == DEACT)
+	if (self->color == plr->color)
 		return (1);
 	else
 		return (0);
 }
 
-void	obj_spike_update(t_obj *self)
+void	obj_check_update(t_obj *self)
 {
-	int		i;
-	int		parent_up;
-
-	i = 0;
-	parent_up = 0;
-	while (self->ctl->parent[i])
-		if (self->ctl->parent[i++]->status == ACT)
-			parent_up++;
-	if (self->ctl->logic(parent_up, i) == 1)
-	{
-		self->status = ACT;
-		self->chr = "I";
-	}
-	else
-	{
-		self->status = DEACT;
-		self->chr = "_";
-	}
+	(void)self;
 }
 
-void	obj_spike_init_fct(t_ctl *ctl, int fct)
+void	obj_check_init_fct(t_ctl *ctl, int fct)
 {
 	if (fct & 4)
-		ctl->act = &obj_spike_act;
+		ctl->act = &obj_check_act;
 	if (fct & 2)
-		ctl->coll = &obj_spike_coll;
+		ctl->coll = &obj_check_coll;
 	if (fct & 1)
-		ctl->update = &obj_spike_update;
+		ctl->update = &obj_check_update;
 }

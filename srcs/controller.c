@@ -6,30 +6,23 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 03:35:48 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 19:22:07 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 00:28:51 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
 
-t_ctl	*ctl_create
-	(void (*act)(t_obj*, t_player *plr), 
-	 int (*coll)(t_obj*, t_player*),
-	 int (*logic)(int, int),
-	 void (*update)(t_obj*),
-	 int group)
+int		ctl_obj_is_parent(t_obj *self, t_obj *obj)
 {
-	t_ctl	*ctl;
-
-	if (!(ctl = malloc(sizeof(t_ctl))))
+	if (obj == self)
 		return (0);
-	ctl->act = act;
-	ctl->coll = coll;
-	ctl->logic = logic;
-	ctl->update = update;
-	ctl->group = group;
-	ctl->parent = 0;
-	return (ctl);
+	if (!obj->ctl)
+		return (0);
+	if (!obj->ctl->sensor)
+		return (0);
+	if (obj->ctl->group != self->ctl->group)
+		return (0);
+	return (1);
 }
 
 void	ctl_destroy(t_ctl *ctl)
@@ -46,7 +39,7 @@ int		ctl_count_parent(t_obj *self, t_obj *objs)
 	nb_parent = 0;
 	while (objs)
 	{
-		if (objs->ctl && objs->ctl->group == self->ctl->group && objs != self)
+		if (ctl_obj_is_parent(self, objs))
 			nb_parent++;
 		objs = objs->next;
 	}
@@ -65,7 +58,7 @@ t_obj	**ctl_build_parent(t_obj *self, t_obj *objs)
 	i = 0;
 	while (objs)
 	{
-		if (objs->ctl && objs->ctl->group == self->ctl->group && objs != self)
+		if (ctl_obj_is_parent(self, objs))
 			parent[i++] = objs;
 		objs = objs->next;
 	}

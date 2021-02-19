@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 17:52:30 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 23:02:58 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 01:05:22 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_ctl	*mson_create_ctl(int type, int group, int mode, const char *gate)
 	ctl_tmp->act = 0;
 	ctl_tmp->coll = 0;
 	ctl_tmp->update = 0;
+	ctl_tmp->sensor = (mode & 8);
 	mson_set_logic(ctl_tmp, gate);
 	if (type == DOOR)
 		obj_door_init_fct(ctl_tmp, mode);
@@ -62,6 +63,8 @@ t_ctl	*mson_create_ctl(int type, int group, int mode, const char *gate)
 		obj_portal_init_fct(ctl_tmp, mode);
 	else if (type == SPIKE)
 		obj_spike_init_fct(ctl_tmp, mode);
+	else if (type == CHECK)
+		obj_check_init_fct(ctl_tmp, mode);
 	else
 	{
 		free(ctl_tmp);
@@ -80,6 +83,8 @@ int		mson_get_type(const char *str)
 		return (PORTAL);
 	else if (strcmp(str, "spike") == 0)
 		return (SPIKE);
+	else if (strcmp(str, "check") == 0)
+		return (CHECK);
 	else
 		return (-1);
 }
@@ -116,6 +121,14 @@ t_player	*mson_add_plr(const char *line)
 		mson_destroy_token(token);
 		return (0);
 	}
+	plr->max_egg = atoi(token[6]);
+	if (!(plr->egg = malloc(sizeof(t_egg) * plr->max_egg)))
+	{
+		free(plr);
+		mson_destroy_token(token);
+		return (0);
+	}
+	plr->egc = 0;
 	plr->chr = strdup(token[2]);
 	plr->x = atoi(token[3]);
 	plr->y = atoi(token[4]);

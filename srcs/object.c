@@ -6,27 +6,11 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 00:45:29 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 19:20:02 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/18 23:10:33 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
-
-t_obj	*object_create(char *chr, int type, int x, int y, int color, int status, t_ctl *ctl)
-{
-	t_obj	*obj;
-
-	obj = malloc(sizeof(t_obj));
-	obj->chr = chr;
-	obj->type = type;
-	obj->x = x;
-	obj->y = y;
-	obj->color = color;
-	obj->status = status;
-	obj->ctl = ctl;
-	obj->next = 0;
-	return (obj);
-}
 
 void	object_add(t_obj **obj_lst, t_obj *obj)
 {

@@ -6,7 +6,7 @@
 #    By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/06 15:43:27 by agiraude          #+#    #+#              #
-#    Updated: 2021/02/18 21:57:12 by agiraude         ###   ########.fr        #
+#    Updated: 2021/02/19 01:14:10 by agiraude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,12 +25,14 @@ SRCS_FILE		=	main.c \
 					render.c \
 					init.c \
 					utils.c \
+					egg.c \
 					gnl/get_next_line.c \
 					gnl/get_next_line_utils.c \
 					obj/lever.c \
 					obj/door.c \
 					obj/spike.c \
 					obj/portal.c \
+					obj/check.c \
 					mson/mson.c
 
 SRCS_DIR		=	srcs/
