@@ -6,7 +6,7 @@
 #    By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/06 15:43:27 by agiraude          #+#    #+#              #
-#    Updated: 2021/02/19 18:41:33 by agiraude         ###   ########.fr        #
+#    Updated: 2021/02/19 22:51:56 by agiraude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			=	redino
 
 INC_DIR			=	-I includes/
 
-DEP				=	-lncurses
+DEP				=	-lncurses -lSDL2
 
 SRCS_FILE		=	main.c \
 					play.c \
@@ -27,6 +27,7 @@ SRCS_FILE		=	main.c \
 					init.c \
 					utils.c \
 					egg.c \
+					scene.c \
 					ux/ux.c \
 					gnl/get_next_line.c \
 					gnl/get_next_line_utils.c \

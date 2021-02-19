@@ -22,5 +22,5 @@ O	door	-	23	5	none	0		1		3		AND
 #ID	type	chr	x	y	color	maxegg
 P	player	P	5	5	white	0
 
-H "use e to interract with things"
+H "use [e] to interract with things"
 T "01"

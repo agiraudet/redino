@@ -21,6 +21,8 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <stdio.h>
+# include <SDL2/SDL.h>
 
 # define NONE 0
 # define RED 1
@@ -39,6 +41,19 @@
 # define LEVER 3
 # define DOOR 4
 # define CHECK 5
+
+# define SPRITE_SIZE 16
+# define ATLAS_SIZE 160
+# define ATLAS_NB_SPRITE ATLAS_SIZE / SPRITE_SIZE
+
+typedef struct	s_scene
+{
+	SDL_Window	*win;
+	SDL_Surface	*surf;
+	SDL_Surface	*atlas;
+	int			wd;
+	int			hg;
+}				t_scene;
 
 typedef struct	s_egg
 {
