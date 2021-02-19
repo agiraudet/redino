@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 17:52:30 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 01:05:22 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 02:14:14 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,8 @@ void	mson_add_obj(t_obj **objs, const char *line)
 		return;
 	}
 	obj_tmp->chr = strdup(token[2]);
+	obj_tmp->pch[0] = obj_tmp->chr[0];
+	obj_tmp->pch[1] = 0;
 	obj_tmp->x = atoi(token[3]);
 	obj_tmp->y = atoi(token[4]);
 	obj_tmp->color = mson_get_color(token[5]);
@@ -164,6 +166,7 @@ void	mson_add_obj(t_obj **objs, const char *line)
 	obj_tmp->ctl = ctl_tmp;
 	obj_tmp->next = 0;
 	object_add(objs, obj_tmp);
+	mson_destroy_token(token);
 }
 
 void	mson_add_map(char **map, const char *line)

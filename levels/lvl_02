@@ -6,18 +6,21 @@ w......................w
 w......................w
 w......................w
 w......................w
-w......................w
-w......................w
+w.........w...w........w
+w.........w...w........w
 wwwwwwwwwwwwwwwwwwwwwwww
 
-#mode:  &act	&coll	&update
-#		 4		 2		  1
+#mode: sensor  &act		&coll	&update
+#		 8		4		 2		  1
 
 #obj
-#ID	type	chr	x	y	color	status	group	mode	logic
-O	portal	O	3	3	green	1		0		2		none
-O	lever	/	6	6	green	0		1		5		none
-O	door	-	23	5	none	0		1		3		AND
+#ID	type	chr	x	y	color		status	group	mode	logic
+O	lever	/\	3	3	white		0		1		13		none
+O	spike	I_	12	8	white		1		1		3		NAND
+O	spike	I_	11	8	white		1		1		3		NAND
+O	spike	I_	13	8	white		1		1		3		NAND
+O	door	-	12	10	bg_white	1		0		2		none
+
 
 #player
 #ID	type	chr	x	y	color	maxegg

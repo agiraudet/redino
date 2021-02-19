@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 22:42:27 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 01:47:54 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 02:49:30 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct		s_player
 typedef struct		s_object
 {
 	char			*chr;
+	char			pch[2];
 	int				status;
 	int				type;
 	int				x;
@@ -96,6 +97,7 @@ char				**ft_nsplit(const char *str, const char *sep);
 /* RENDER */
 void				render_level(t_level *lvl);
 void				render_one_egg(t_egg *egg);
+void				render_set_offset(char **map);
 
 /* LEVEL */
 t_level				*level_load(char *lvl_file);

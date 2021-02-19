@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 22:21:04 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 01:29:17 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 02:47:56 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		main(int argc, char **argv)
 		if (!player_move(lvl->map, lvl->objs, lvl->plr))
 			break;
 	}
-//	level_destroy(lvl);
+	level_destroy(lvl);
 	endwin();
 	return (0);
 }
