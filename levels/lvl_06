@@ -28,4 +28,5 @@ O	door	-	12	10	bg_white	1		0		2		none
 #ID	type	chr	x	y	color	maxegg
 P	player	P	5	5	white	1
 
+H "use [space] to lay an egg, and [r] to hatch it"
 T "06"
