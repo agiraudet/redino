@@ -25,3 +25,5 @@ O	check	.	20	3	green	1		0		2		none
 #player
 #ID	type	chr	x	y	color	maxegg
 P	player	P	5	5	white	3
+
+H "This is a test"

@@ -25,3 +25,5 @@ O	door	-	12	10	bg_white	1		0		2		none
 #player
 #ID	type	chr	x	y	color	maxegg
 P	player	P	5	5	white	0
+
+T "04"

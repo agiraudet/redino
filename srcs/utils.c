@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 21:52:09 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 21:59:40 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 16:20:00 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,24 @@ char		**ft_nsplit(const char *str, const char *sep)
 		}
 	}
 	ret[i] = 0;
+	return (ret);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*ret;
+	size_t	i;
+
+	if (!s1 || !s2)
+		return (0);
+	ret = (char*)malloc(sizeof(char) * (strlen(s1) + strlen(s2) + 1));
+	if (!ret)
+		return (0);
+	i = 0;
+	while (*s1)
+		ret[i++] = *s1++;
+	while (*s2)
+		ret[i++] = *s2++;
+	ret[i] = '\0';
 	return (ret);
 }

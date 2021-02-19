@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 01:35:33 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 02:19:35 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 17:01:18 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	obj_lever_act(t_obj *self, t_player *plr)
 {
-	if (self->x == plr->x && self->y == plr->y && self->color == plr->color)
+	if (player_is_near(self, plr) && self->color == plr->color)
 	{
 		if (self->status == ACT)
 		{

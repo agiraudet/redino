@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 15:07:37 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 02:48:48 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 17:16:46 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_level		*level_load(char *lvl_file)
 
 	if (!(lvl = mson_parse_file(lvl_file)))
 		return (0);
-	render_set_offset(lvl->map);
+	render_set_res(lvl->map);
 	return (lvl);
 }
 
@@ -68,5 +68,9 @@ void		level_destroy(t_level *lvl)
 		level_obj_destroy(lvl->objs);
 		level_map_destroy(lvl->map);
 		level_plr_destroy(lvl->plr);
+		if (lvl->hint)
+			free(lvl->hint);
+		if (lvl->name)
+			free(lvl->name);
 		free(lvl);
 }

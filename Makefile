@@ -6,7 +6,7 @@
 #    By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/06 15:43:27 by agiraude          #+#    #+#              #
-#    Updated: 2021/02/19 01:14:10 by agiraude         ###   ########.fr        #
+#    Updated: 2021/02/19 15:22:46 by agiraude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS_FILE		=	main.c \
 					init.c \
 					utils.c \
 					egg.c \
+					ux/ux.c \
 					gnl/get_next_line.c \
 					gnl/get_next_line_utils.c \
 					obj/lever.c \

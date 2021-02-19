@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 17:52:30 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 02:14:14 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 17:23:13 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_ctl	*mson_create_ctl(int type, int group, int mode, const char *gate)
 	ctl_tmp->coll = 0;
 	ctl_tmp->update = 0;
 	ctl_tmp->sensor = (mode & 8);
+	ctl_tmp->parent = 0;
 	mson_set_logic(ctl_tmp, gate);
 	if (type == DOOR)
 		obj_door_init_fct(ctl_tmp, mode);
@@ -128,6 +129,7 @@ t_player	*mson_add_plr(const char *line)
 		mson_destroy_token(token);
 		return (0);
 	}
+	plr->win = 0;
 	plr->egc = 0;
 	plr->chr = strdup(token[2]);
 	plr->x = atoi(token[3]);
@@ -171,9 +173,23 @@ void	mson_add_obj(t_obj **objs, const char *line)
 
 void	mson_add_map(char **map, const char *line)
 {
-	static int	i = 0;
+	int		i;
 
-	map[i++] = strdup(line);
+	i = 0;
+	while (map[i])
+		i++;
+	map[i] = strdup(line);
+}
+
+char	*mson_add_text(const char *line)
+{
+	char	**token;
+	char	*hint;
+
+	token = ft_nsplit(line, "\"\t");
+	hint = strdup(token[1]);
+	mson_destroy_token(token);
+	return (hint);
 }
 
 void	mson_parse_line(t_level *lvl, const char *line)
@@ -184,6 +200,10 @@ void	mson_parse_line(t_level *lvl, const char *line)
 		mson_add_map(lvl->map, line);
 	else if (*line == 'P')
 		lvl->plr = mson_add_plr(line);
+	else if (*line == 'H')
+		lvl->hint = mson_add_text(line);
+	else if (*line == 'T')
+		lvl->name = mson_add_text(line);
 }
 
 t_level	*mson_lvl_create(void)
@@ -195,6 +215,8 @@ t_level	*mson_lvl_create(void)
 	lvl->objs = 0;
 	lvl->map = calloc(500, sizeof(char*));
 	lvl->plr = 0;
+	lvl->hint = 0;
+	lvl->name = 0;
 	return (lvl);
 }
 

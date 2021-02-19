@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 13:42:58 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/18 21:19:49 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 15:51:32 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		obj_door_coll(t_obj *self, t_player *plr)
 	(void)plr;
 	if (self->status == ACT)
 	{
-		win();
+		plr->win = 1;
 		return (1);
 	}
 	else

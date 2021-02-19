@@ -6,14 +6,13 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 17:03:15 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 02:52:55 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 17:20:30 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
 
-int		g_off_y = 0;
-int		g_off_x = 0;
+t_resolution	g_res;
 
 void	get_map_maxyx(char **map, int *hg, int *wd)
 {
@@ -34,23 +33,22 @@ void	get_map_maxyx(char **map, int *hg, int *wd)
 	*wd = max_len;
 }
 
-void	render_set_offset(char **map)
+void	render_set_res(char **map)
 {
-	int		hg;
-	int		wd;
-	int		map_wd;
-	int		map_hg;
-
-	getmaxyx(stdscr, hg, wd);
-	get_map_maxyx(map, &map_hg, &map_wd);
-	g_off_y = (hg - map_hg) / 2;
-	g_off_x = (wd - map_wd) / 2;
+	g_res.hg = 0;
+	g_res.wd = 0;
+	g_res.map_hg = 0;
+	g_res.map_wd = 0;
+	getmaxyx(stdscr, g_res.hg, g_res.wd);
+	get_map_maxyx(map, &g_res.map_hg, &g_res.map_wd);
+	g_res.off_y = (g_res.hg - g_res.map_hg) / 2;
+	g_res.off_x = (g_res.wd - g_res.map_wd) / 2;
 }
 
 void	render_one_egg(t_egg *egg)
 {
 		attron(COLOR_PAIR(egg->color));
-		mvprintw(egg->y + g_off_y, egg->x + g_off_x, "e");
+		mvprintw(egg->y + g_res.off_y, egg->x + g_res.off_x, "e");
 		attroff(COLOR_PAIR(egg->color));
 		refresh();
 }
@@ -63,7 +61,7 @@ void	render_egg(t_player *plr)
 	while (i >= 0)
 	{
 		attron(COLOR_PAIR(plr->egg[i].color));
-		mvprintw(plr->egg[i].y + g_off_y, plr->egg[i].x + g_off_x, "e");
+		mvprintw(plr->egg[i].y + g_res.off_y, plr->egg[i].x + g_res.off_x, "e");
 		attroff(COLOR_PAIR(plr->egg[i].color));
 		i--;
 	}
@@ -77,7 +75,7 @@ void	render_map(char **map)
 	while (map[i])
 	{
 		attron(A_DIM);
-		mvwprintw(stdscr, i + g_off_y, g_off_x, "%s", map[i]);
+		mvwprintw(stdscr, i + g_res.off_y, g_res.off_x, "%s", map[i]);
 		attroff(A_DIM);
 		i++;
 	}
@@ -88,7 +86,7 @@ void	render_objs(t_obj *objs)
 	while (objs)
 	{
 		attron(COLOR_PAIR(objs->color));
-		mvprintw(objs->y + g_off_y, objs->x + g_off_x, objs->pch);
+		mvprintw(objs->y + g_res.off_y, objs->x + g_res.off_x, objs->pch);
 		attroff(COLOR_PAIR(objs->color));
 		objs = objs->next;
 	}
@@ -98,7 +96,7 @@ void	render_player(t_player *plr)
 {
 	
 	attron(A_BOLD | COLOR_PAIR(plr->color));
-	mvprintw(plr->y + g_off_y, plr->x + g_off_x, plr->chr);
+	mvprintw(plr->y + g_res.off_y, plr->x + g_res.off_x, plr->chr);
 	attroff(A_BOLD | COLOR_PAIR(plr->color));
 }
 
@@ -108,5 +106,14 @@ void	render_level(t_level *lvl)
 	render_objs(lvl->objs);
 	render_egg(lvl->plr);
 	render_player(lvl->plr);
+	if (lvl->hint)
+		ux_print_hint(lvl->hint);
+	if (lvl->name)
+		ux_print_name(lvl->name);
 	refresh();
+}
+
+void	render_clean_screen(void)
+{
+	erase();
 }

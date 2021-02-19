@@ -6,11 +6,20 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 00:45:42 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 01:46:14 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 17:00:43 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
+
+int		player_is_near(t_obj *obj, t_player *plr)
+{
+	if (obj->x == plr->x && (obj->y >= plr->y - 1 && obj->y <= plr->y + 1))
+		return (1);
+	if (obj->y == plr->y && (obj->x >= plr->x - 1 && obj->x <= plr->x + 1))
+		return (1);
+	return (0);
+}
 
 int		player_collision(char **map, t_obj *objs, t_player *plr, int y, int x)
 {
@@ -52,7 +61,9 @@ int		player_move(char **map, t_obj *objs, t_player *plr)
 		egg_recent = egg_drop(plr);
 	else if (ch == 'r')
 		egg_hatch(plr);
-	else if (ch == 'q')
+	else if (ch == 'z')
 		return (0);
+	else if (ch == 'q')
+		return (-1);
 	return (1);
 }

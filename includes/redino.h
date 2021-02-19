@@ -1,4 +1,5 @@
 /* ************************************************************************** */
+
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   redino.h                                           :+:      :+:    :+:   */
@@ -6,7 +7,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 22:42:27 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 02:49:30 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/19 16:13:52 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +19,7 @@
 # include <string.h>
 # include <fcntl.h>
 
-#define NONE 0
+# define NONE 0
 # define RED 1
 # define GREEN 2
 # define BLUE 3
@@ -52,6 +53,7 @@ typedef struct		s_player
 	int				max_egg;
 	t_egg			*egg;
 	char			*chr;
+	int				win;
 }					t_player;
 
 typedef struct		s_object
@@ -83,7 +85,20 @@ typedef struct		s_level
 	t_obj			*objs;
 	char			**map;
 	t_player		*plr;
+	char			*hint;
+	char			*name;
 }					t_level;
+
+typedef struct	s_resolution
+{
+	int			wd;
+	int			hg;
+	int			off_x;
+	int			off_y;
+	int			map_wd;
+	int			map_hg;
+}				t_resolution;
+
 
 /* MAIN */
 int					win(void);
@@ -92,12 +107,14 @@ int					win(void);
 void				init_ncurse(void);
 
 /* UTILS */
+char				*ft_strjoin(char const *s1, char const *s2);
 char				**ft_nsplit(const char *str, const char *sep);
 
 /* RENDER */
+void				render_clean_screen(void);
 void				render_level(t_level *lvl);
 void				render_one_egg(t_egg *egg);
-void				render_set_offset(char **map);
+void				render_set_res(char **map);
 
 /* LEVEL */
 t_level				*level_load(char *lvl_file);
@@ -122,6 +139,7 @@ void				object_act(t_obj *obj, t_player *plr);
 void				object_add(t_obj **obj_lst, t_obj *obj);
 
 /* PLAYER */
+int					player_is_near(t_obj *obj, t_player *plr);
 int					player_collision(char **map, t_obj *objs, t_player *plr, int y, int x);
 int					player_move(char **map, t_obj *obj, t_player *plr);
 
@@ -138,5 +156,13 @@ void				obj_check_init_fct(t_ctl *ctl, int fct);
 
 /* MSON */
 t_level				*mson_parse_file(char *file);
+
+/* UX */
+void				ux_print_middle(int y, char *str, int color, int bold);
+void				ux_print_title(void);
+void				ux_title_screen(void);
+void				ux_print_hint(char *str);
+void				ux_print_name(char *str);
+void				ux_init(void);
 
 #endif
