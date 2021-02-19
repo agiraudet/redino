@@ -1,0 +1,3 @@
+redino
+srcs/*.o
+srcs/*/*.o

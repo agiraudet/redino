@@ -1,0 +1,33 @@
+wwwwwwwwwwwwwwwwwwwwwwwww
+w.....w...w...w...w.....w
+w.....w...w...w...w.....w
+w.....w...w...w...w.....w
+w.....w...w...w...w.....w
+w.......................w
+w.......................w
+w.........w...w.........w
+w.........w...w.........w
+w.........w...w.........w
+wwwwwwwwwwwwwwwwwwwwwwwww
+
+#mode: sensor  &act		&coll	&update
+#		 8		4		 2		  1
+
+#obj
+#ID	type	chr	x	y	color		status	group	mode	logic
+O	spike	I_	11	7	white		1		1		3		NAND
+O	spike	I_	12	7	white		1		1		3		NAND
+O	spike	I_	13	7	white		1		1		3		NAND
+O	spike	I_	7	4	white		0		1		3		AND
+O	spike	I_	8	4	white		0		1		3		AND
+O	spike	I_	9	4	white		0		1		3		AND
+O	spike	I_	15	4	white		0		1		3		OR
+O	spike	I_	16	4	white		0		1		3		OR
+O	spike	I_	17	4	white		0		1		3		OR
+O	lever	/\	8	2	white		0		1		13		none
+O	lever	/\	16	2	white		0		1		13		none
+O	door	-	12	10	none		0		1		3		XOR
+
+#player
+#ID	type	chr	x	y	color	maxegg
+P	player	P	5	5	white	1
