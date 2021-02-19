@@ -18,6 +18,9 @@
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 # define NONE 0
 # define RED 1
@@ -105,6 +108,10 @@ int					win(void);
 
 /* INIT */
 void				init_ncurse(void);
+
+/* PLAY */
+int					play_all_lvl(const char *lvl_path);
+int					play_solo_lvl(char *lvl_path);
 
 /* UTILS */
 char				*ft_strjoin(char const *s1, char const *s2);

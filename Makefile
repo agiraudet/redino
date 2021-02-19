@@ -6,7 +6,7 @@
 #    By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/06 15:43:27 by agiraude          #+#    #+#              #
-#    Updated: 2021/02/19 15:22:46 by agiraude         ###   ########.fr        #
+#    Updated: 2021/02/19 18:41:33 by agiraude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ INC_DIR			=	-I includes/
 DEP				=	-lncurses
 
 SRCS_FILE		=	main.c \
+					play.c \
 					object.c \
 					player.c \
 					logic.c \
