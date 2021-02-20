@@ -31,12 +31,12 @@ Or you can play only one level of your choice by typing:
 
 ## Controls
 
-- WASD	*move the character around*
-- Q		*quit*
-- E		*interract with things when near*
-- SPACE	*lay an egg*
-- R		*hatch the last egg layed*
-- Z		*reload the current level*
+- WASD  -> *move the character around*
+- Q	    -> *quit*
+- E		  -> *interract with things when near*
+- SPACE -> *lay an egg*
+- R		  -> *hatch the last egg layed*
+- Z		  -> *reload the current level*
 
 ## Level Building
 
