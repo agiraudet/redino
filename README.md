@@ -31,12 +31,12 @@ Or you can play only one level of your choice by typing:
 
 ## Controls
 
-- WASD  -> *move the character around*
-- Q	    -> *quit*
-- E		  -> *interract with things when near*
-- SPACE -> *lay an egg*
-- R		  -> *hatch the last egg layed*
-- Z		  -> *reload the current level*
+- **WASD** *move the character around*
+- **Q**	*quit*
+- **E**	*interract with things when near*
+- **SPACE** *lay an egg*
+- **R** *hatch the last egg layed*
+- **Z** *reload the current level*
 
 ## Level Building
 
@@ -49,30 +49,30 @@ It should be completly closed.
 Each object you want to add to your level must be describde by one line, starting by an 'O'.
 Each setting must be in the correct order, and separeted by spaces and/or tabulations.
 The settings are (in order):
-- ID *'O' for an object, 'P' for the player, 'H' for a hint that will be displayed in game, 'T' for the level's title. ('H' and 'T' are not displayed in game right now).*
-- TYPE *must be one off the currently implemented objects : lever, door, portal, spike, check.
-- X *the x postion of the object on the grid*
-- Y *the Y postion of the object on the grid*
-- COLOR *must be one of the currently implemented color : red, green, blue, white, black, none.*
-- STATUS *either 0 or 1, depending of if the object is already activated at the start off the level*
-- GROUP *all objects in the same group will be activated by the sensors in the same group. 0 means no group.*
-- MODE *determine the actions of the object, see below for more details*
-- LOGIC *set which logic gate is use by the object when checking the state of all it's parents sensors to determine its activation. Must one off : OR, AND, XOR, XNOR, NOR, NAND*
+- **ID** *'O' for an object, 'P' for the player, 'H' for a hint that will be displayed in game, 'T' for the level's title. ('H' and 'T' are not displayed in game right now).*
+- **TYPE** *must be one off the currently implemented objects : lever, door, portal, spike, check.
+- **X** *the x postion of the object on the grid*
+- **Y** *the Y postion of the object on the grid*
+- **COLOR** *must be one of the currently implemented color : red, green, blue, white, black, none.*
+- **STATUS** *either 0 or 1, depending of if the object is already activated at the start off the level*
+- **GROUP** *all objects in the same group will be activated by the sensors in the same group. 0 means no group.*
+- **MODE** *determine the actions of the object, see below for more details*
+- **LOGIC** *set which logic gate is use by the object when checking the state of all it's parents sensors to determine its activation. Must one off : OR, AND, XOR, XNOR, NOR, NAND*
 
 The line describing the player should use the followings settings:
-- ID *'P' for player*
-- TYPE *well, player.*
-- X *same as objects*
-- Y *same as objects*
-- COLOR *same as objects*
-- MAXEGG *the maximum allowed number of egg layed at once in the level*
+- **ID** *'P' for player*
+- **TYPE** *well, player.*
+- **X** *same as objects*
+- **Y** *same as objects*
+- **COLOR** *same as objects*
+- **MAXEGG** *the maximum allowed number of egg layed at once in the level*
 
 About the MODE setting:
 It should be an integer between 0 and 15. the 4 least significant bits are used to determine the following options (from most significant to least) :
-- SENSOR *A sensor will dictate the state of the non-sensors objects of his group*
-- ACT *determine if the player can interract with the object using E*
-- COLL *determine if the game check the object for collision. The object can still be transparent, but this in for exemple need for portal, who change the color off the player on contact.*
-- UPDATE *called each frame, for exemple usefull for changing sprites off an object*
+- **SENSOR** *A sensor will dictate the state of the non-sensors objects of his group*
+- **ACT** *determine if the player can interract with the object using E*
+- **COLL** *determine if the game check the object for collision. The object can still be transparent, but this in for exemple need for portal, who change the color off the player on contact.*
+- **UPDATE** *called each frame, for exemple usefull for changing sprites off an object*
 
 To see how each objects use thoses option, looks at the files in srcs/obj/.
 
