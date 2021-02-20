@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mson.c                                             :+:      :+:    :+:   */
+/*   loader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/18 17:52:30 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 04:38:03 by agiraude         ###   ########.fr       */
+/*   Created: 2021/02/20 04:45:52 by agiraude          #+#    #+#             */
+/*   Updated: 2021/02/20 05:13:04 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
 #include "get_next_line.h"
 
-void	mson_destroy_token(char **token)
+void	loader_destroy_token(char **token)
 {
 	int		i;
 	
@@ -23,7 +23,7 @@ void	mson_destroy_token(char **token)
 	free(token);
 }
 
-void	mson_set_logic(t_ctl *ctl, const char *gate)
+void	loader_set_logic(t_ctl *ctl, const char *gate)
 {
 	if (strcmp(gate, "OR") == 0)
 		ctl->logic = &logic_or;
@@ -41,7 +41,7 @@ void	mson_set_logic(t_ctl *ctl, const char *gate)
 		ctl->logic = 0;
 }
 
-t_ctl	*mson_create_ctl(int type, int group, int mode, const char *gate)
+t_ctl	*loader_create_ctl(int type, int group, int mode, const char *gate)
 {
 	t_ctl	*ctl_tmp;
 
@@ -55,7 +55,7 @@ t_ctl	*mson_create_ctl(int type, int group, int mode, const char *gate)
 	ctl_tmp->update = 0;
 	ctl_tmp->sensor = (mode & 8);
 	ctl_tmp->parent = 0;
-	mson_set_logic(ctl_tmp, gate);
+	loader_set_logic(ctl_tmp, gate);
 	if (type == DOOR)
 		obj_door_init_fct(ctl_tmp, mode);
 	else if (type == LEVER)
@@ -66,15 +66,10 @@ t_ctl	*mson_create_ctl(int type, int group, int mode, const char *gate)
 		obj_spike_init_fct(ctl_tmp, mode);
 	else if (type == CHECK)
 		obj_check_init_fct(ctl_tmp, mode);
-	else
-	{
-		free(ctl_tmp);
-		return (0);
-	}
 	return (ctl_tmp);
 }
 
-int		mson_get_type(const char *str)
+int		loader_get_type(const char *str)
 {
 	if (strcmp(str, "door") == 0)
 		return (DOOR);
@@ -90,7 +85,7 @@ int		mson_get_type(const char *str)
 		return (-1);
 }
 
-int		mson_get_color(const char *str)
+int		loader_get_color(const char *str)
 {
 	if (strcmp(str, "red") == 0)
 		return (RED);
@@ -106,20 +101,20 @@ int		mson_get_color(const char *str)
 		return (0);
 }
 
-int			*mson_add_sprite(char *token)
+int			*loader_add_sprite(char *sprite_str)
 {
 	char	**list_sprite;
 	int		*arr;
 	int		i;
 
-	if (!(list_sprite = ft_nsplit(token, ",")))
+	if (!(list_sprite = ft_nsplit(sprite_str, ",")))
 		return (0);
 	i = 0;
 	while (list_sprite[i])
 		i++;
 	if (!(arr = malloc(sizeof(int) * (i + 1))))
 	{
-		mson_destroy_token(list_sprite);
+		loader_destroy_token(list_sprite);
 		return (0);
 	}
 	i = 0;
@@ -128,28 +123,28 @@ int			*mson_add_sprite(char *token)
 		arr[i] = atoi(list_sprite[i]);
 		i++;
 	}
-	mson_destroy_token(list_sprite);
+	loader_destroy_token(list_sprite);
 	return (arr);
 }
 
-char		*mson_get_sprite(char *type)
+char		*loader_get_sprite(char *type)
 {
-	if (strcmp(str, "door") == 0)
+	if (strcmp(type, "door") == 0)
 		return (DOOR_SPRITE);
-	else if(strcmp(str, "lever") == 0)
+	else if(strcmp(type, "lever") == 0)
 		return (LEVER_SPRITE);
-	else if (strcmp(str, "portal") == 0)
+	else if (strcmp(type, "portal") == 0)
 		return (PORTAL_SPRITE);
-	else if (strcmp(str, "spike") == 0)
-		return (SPIKE_SRPITE);
-	else if (strcmp(str, "check") == 0)
+	else if (strcmp(type, "spike") == 0)
+		return (SPIKE_SPRITE);
+	else if (strcmp(type, "check") == 0)
 		return (CHECK_SPRITE);
 	else
 		return (0);
 }
 
 
-t_player	*mson_add_plr(const char *line)
+t_player	*loader_add_plr(const char *line)
 {
 	char	**token;
 	t_player	*plr;
@@ -158,29 +153,29 @@ t_player	*mson_add_plr(const char *line)
 		return (0);
 	if (!(plr = malloc(sizeof(t_player))))
 	{
-		mson_destroy_token(token);
+		loader_destroy_token(token);
 		return (0);
 	}
 	plr->max_egg = atoi(token[5]);
 	if (!(plr->egg = malloc(sizeof(t_egg) * plr->max_egg)))
 	{
 		free(plr);
-		mson_destroy_token(token);
+		loader_destroy_token(token);
 		return (0);
 	}
 	plr->win = 0;
 	plr->egc = 0;
 	plr->x = atoi(token[2]);
 	plr->y = atoi(token[3]);
-	plr->color = mson_get_color(token[4]);
-	plr->sprite = mson_add_sprite(PLAYER_SPRITE);
-	plr->sprite_egg = mson_add_sprite(EGG_SPRITE);
+	plr->color = loader_get_color(token[4]);
+	plr->sprite = loader_add_sprite(PLAYER_SPRITE);
+	plr->sprite_egg = loader_add_sprite(EGG_SPRITE);
 	plr->frame = 0;
-	mson_destroy_token(token);
+	loader_destroy_token(token);
 	return (plr);
 }
 
-void	mson_add_obj(t_obj **objs, const char *line)
+void	loader_add_obj(t_obj **objs, const char *line)
 {
 	char	**token;
 	t_obj	*obj_tmp;
@@ -190,28 +185,28 @@ void	mson_add_obj(t_obj **objs, const char *line)
 		return ;
 	if (!(obj_tmp = malloc(sizeof(t_obj))))
 	{
-		mson_destroy_token(token);
+		loader_destroy_token(token);
 		return;
 	}
-	if (!(ctl_tmp = mson_create_ctl(mson_get_type(token[1]), atoi(token[6]), atoi(token[7]), token[8])))
+	if (!(ctl_tmp = loader_create_ctl(loader_get_type(token[1]), atoi(token[6]), atoi(token[7]), token[8])))
 	{
 		free(obj_tmp);
-		mson_destroy_token(token);
+		loader_destroy_token(token);
 		return;
 	}
 	obj_tmp->x = atoi(token[2]);
 	obj_tmp->y = atoi(token[3]);
-	obj_tmp->color = mson_get_color(token[4]);
+	obj_tmp->color = loader_get_color(token[4]);
 	obj_tmp->status = atoi(token[5]);
-	obj_tmp->sprite = mson_get_sprite(token[1]);
+	obj_tmp->sprite = loader_add_sprite(loader_get_sprite(token[1]));
 	obj_tmp->frame = 0;
 	obj_tmp->ctl = ctl_tmp;
 	obj_tmp->next = 0;
 	object_add(objs, obj_tmp);
-	mson_destroy_token(token);
+	loader_destroy_token(token);
 }
 
-void	mson_add_map(char **map, const char *line)
+void	loader_add_map(char **map, const char *line)
 {
 	int		i;
 
@@ -221,32 +216,32 @@ void	mson_add_map(char **map, const char *line)
 	map[i] = strdup(line);
 }
 
-char	*mson_add_text(const char *line)
+char	*loader_add_text(const char *line)
 {
 	char	**token;
 	char	*hint;
 
 	token = ft_nsplit(line, "\"\t");
 	hint = strdup(token[1]);
-	mson_destroy_token(token);
+	loader_destroy_token(token);
 	return (hint);
 }
 
-void	mson_parse_line(t_level *lvl, const char *line)
+void	loader_parse_line(t_level *lvl, const char *line)
 {
 	if (*line == 'O')
-		mson_add_obj(&lvl->objs, line);
+		loader_add_obj(&lvl->objs, line);
 	else if (*line == 'w' || *line == ' ')
-		mson_add_map(lvl->map, line);
+		loader_add_map(lvl->map, line);
 	else if (*line == 'P')
-		lvl->plr = mson_add_plr(line);
+		lvl->plr = loader_add_plr(line);
 	else if (*line == 'H')
-		lvl->hint = mson_add_text(line);
+		lvl->hint = loader_add_text(line);
 	else if (*line == 'T')
-		lvl->name = mson_add_text(line);
+		lvl->name = loader_add_text(line);
 }
 
-t_level	*mson_lvl_create(void)
+t_level	*loader_lvl_create(void)
 {
 	t_level	*lvl;
 
@@ -260,7 +255,7 @@ t_level	*mson_lvl_create(void)
 	return (lvl);
 }
 
-t_level	*mson_parse_file(char *file)
+t_level	*loader_parse_file(char *file)
 {
 	int		fd;
 	char	*line;
@@ -268,12 +263,12 @@ t_level	*mson_parse_file(char *file)
 
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (0);
-	if (!(lvl = mson_lvl_create()))
+	if (!(lvl = loader_lvl_create()))
 		return (0);
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (*line != '#')
-			mson_parse_line(lvl, line);
+			loader_parse_line(lvl, line);
 		free(line);
 	}
 	free(line);

@@ -6,13 +6,13 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 23:03:17 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 03:02:48 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 05:07:33 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
 
-void	render_map_sdl(t_scene *sc, char **map)
+void	render_map(t_scene *sc, char **map)
 {
 	int		y;
 	int		x;
@@ -31,7 +31,7 @@ void	render_map_sdl(t_scene *sc, char **map)
 	}
 }
 
-void	render_objs_sdl(t_scene *sc, t_obj *objs, char **map)
+void	render_objs(t_scene *sc, t_obj *objs, char **map)
 {
 	while (objs)
 	{
@@ -41,28 +41,29 @@ void	render_objs_sdl(t_scene *sc, t_obj *objs, char **map)
 	}
 }
 
-void	render_egg_sdl(t_scene *sc, t_player *plr)
+void	render_egg(t_scene *sc, t_player *plr)
 {
 	int		i;
 
 	i = plr->egc - 1;
 	while (i >= 0)
 	{
-		scene_blit_sprite(sc, plr->egg_sprite_nb, plr->egg[i].x, plr->egg[i].y);
+		scene_blit_sprite(sc, plr->sprite_egg[plr->egg[i].frame],
+				plr->egg[i].x, plr->egg[i].y);
 		i--;
 	}
 }
 
-void	render_player_sdl(t_scene *sc, t_player *plr)
+void	render_player(t_scene *sc, t_player *plr)
 {
-	scene_blit_sprite(sc, plr->sprite_nb, plr->x, plr->y);
+	scene_blit_sprite(sc, plr->sprite[plr->frame], plr->x, plr->y);
 }
 
-void	render_level_sdl(t_scene *sc ,t_level *lvl)
+void	render_level(t_scene *sc ,t_level *lvl)
 {
-	render_map_sdl(sc, lvl->map);
-	render_objs_sdl(sc, lvl->objs, lvl->map);
-	render_egg_sdl(sc, lvl->plr);
-	render_player_sdl(sc, lvl->plr);
+	render_map(sc, lvl->map);
+	render_objs(sc, lvl->objs, lvl->map);
+	render_egg(sc, lvl->plr);
+	render_player(sc, lvl->plr);
 	SDL_UpdateWindowSurface(sc->win);
 }

@@ -6,28 +6,16 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 15:07:37 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 17:16:46 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 04:53:46 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
 
-t_player *level_plr_init()
-{
-	t_player	*plr;
-
-	plr = malloc(sizeof(t_player));
-	plr->x = 5;
-	plr->y = 5;
-	plr->chr = "P";
-	plr->color = 0;
-	return (plr);
-}
-
 void	level_plr_destroy(t_player *plr)
 {
 	free(plr->egg);
-	free(plr->chr);
+	free(plr->sprite);
 	free(plr);
 }
 
@@ -57,9 +45,8 @@ t_level		*level_load(char *lvl_file)
 {
 	t_level *lvl;
 
-	if (!(lvl = mson_parse_file(lvl_file)))
+	if (!(lvl = loader_parse_file(lvl_file)))
 		return (0);
-	render_set_res(lvl->map);
 	return (lvl);
 }
 

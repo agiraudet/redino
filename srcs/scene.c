@@ -6,40 +6,11 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 20:24:30 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 01:15:44 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 05:06:37 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
-
-t_scene		*scene_create(char *title, int wd, int hg)
-{
-	t_scene		*sc;
-
-	if (!(sc = malloc(sizeof(t_scene))))
-		return (0);
-	sc->win = 0;
-	sc->surf = 0;
-	sc->atlas = 0;
-	sc->wd = wd;
-	sc->hg = hg;
-	sc->off_x = 0;
-	sc->off_y = 0;
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
-		printf("SDL_INIT_VIDEO Error: %s\n", SDL_GetError());
-		return (0);
-	}
-	sc->win = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, wd, hg, SDL_WINDOW_SHOWN);
-	if (!sc->win)
-	{
-		printf("SDL_CreateWindow Error: %s\n", SDL_GetError());
-		SDL_Quit();
-		return (0);
-	}
-	sc->surf = SDL_GetWindowSurface(sc->win);
-	return (sc);
-}
 
 void	scene_fill_bg(t_scene *sc, int hex)
 {
@@ -81,6 +52,37 @@ int		scene_load_atlas(t_scene *sc, char *atlas_path)
 	return (1);
 }
 
+t_scene		*scene_create(char *title, int wd, int hg)
+{
+	t_scene		*sc;
+
+	if (!(sc = malloc(sizeof(t_scene))))
+		return (0);
+	sc->win = 0;
+	sc->surf = 0;
+	sc->atlas = 0;
+	sc->wd = wd;
+	sc->hg = hg;
+	sc->off_x = 0;
+	sc->off_y = 0;
+	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	{
+		printf("SDL_INIT_VIDEO Error: %s\n", SDL_GetError());
+		free(sc);
+		return (0);
+	}
+	sc->win = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, wd, hg, SDL_WINDOW_SHOWN);
+	if (!sc->win)
+	{
+		printf("SDL_CreateWindow Error: %s\n", SDL_GetError());
+		free(sc);
+		SDL_Quit();
+		return (0);
+	}
+	sc->surf = SDL_GetWindowSurface(sc->win);
+	return (sc);
+}
+
 void	scene_gen_sprite(SDL_Rect *sprite, int sprite_nb)
 {
 	sprite->x = (sprite_nb * SPRITE_SIZE) % ATLAS_SIZE;
@@ -107,9 +109,9 @@ void	scene_blit_sprite(t_scene *sc, int sprite_nb, int x, int y)
 int		scene_get_sprite_nb(char c)
 {
 	if (c == 'w')
-		return (1);
+		return (WALL_SPRITE);
 	if (c == '.')
-		return (0);
+		return (GROUND_SPRITE);
 	return (-1);
 }
 

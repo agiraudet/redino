@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 13:42:58 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 02:37:57 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 05:23:08 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ void	obj_door_update(t_obj *self)
 
 	i = 0;
 	parent_up = 0;
+	if (!self->ctl->parent)
+	{
+		if (self->status == ACT)
+			self->frame = 1;
+		else
+			self->frame = 0;
+		return ;
+	}
 	while (self->ctl->parent[i])
 		if (self->ctl->parent[i++]->status == ACT)
 			parent_up++;

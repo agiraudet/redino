@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 14:01:13 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 02:25:14 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 05:14:16 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	obj_spike_update(t_obj *self)
 	if (self->ctl->logic(parent_up, i) == 1)
 	{
 		self->status = ACT;
-		self->pch[0] = self->chr[0];
+		self->frame = 1;
 	}
 	else
 	{
 		self->status = DEACT;
-		self->pch[0] = self->chr[1];
+		self->frame = 0;
 	}
 }
 
