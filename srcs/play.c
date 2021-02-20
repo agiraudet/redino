@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 18:40:27 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 09:37:32 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 11:55:15 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int		play_lvl_exist(const char *file)
 void	play_loop_update(t_scene *sc, t_level *lvl, int old_x, int old_y)
 {
 	object_update(lvl->objs);
-	scene_blit_sprite(sc, scene_get_sprite_nb(lvl->map[old_y][old_x]), old_x, old_y);
-	scene_blit_sprite(sc, scene_get_sprite_nb(lvl->map[lvl->plr->y][lvl->plr->x]), lvl->plr->x, lvl->plr->y);
+	scene_blit_sprite(sc, scene_get_sprite_nb(lvl->map[old_y][old_x]), old_x, old_y, -1);
+	scene_blit_sprite(sc, scene_get_sprite_nb(lvl->map[lvl->plr->y][lvl->plr->x]), lvl->plr->x, lvl->plr->y, -1);
 	render_objs(sc, lvl->objs, lvl->map);
 	render_egg(sc, lvl->plr);
 	render_player(sc, lvl->plr);
@@ -65,6 +65,20 @@ int		play_level(t_scene *sc, t_level *lvl)
 		}
 	}
 	return (0);
+}
+
+int		play_one_level(t_scene *sc, char *lvl_path)
+{
+	t_level	*lvl;
+	int		stat;
+	if (!play_lvl_exist(lvl_path))
+		return (0);
+	lvl = level_load(lvl_path);
+	scene_set_offset(sc, lvl);
+	scene_set_tmp_surf(sc, lvl);
+	stat = play_level(sc, lvl);
+	level_destroy(lvl);
+	return (1);
 }
 
 int		play_all_level(t_scene *sc, const char *lvl_path)

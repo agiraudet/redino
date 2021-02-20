@@ -1,35 +1,37 @@
-wwwwwwwwwwwwwwwwwwwwwwwww
-w.....w...w...w...w.....w
-w.....w...w...w...w.....w
-w.....w...w...w...w.....w
-w.....w...w...w...w.....w
-w.......................w
-w.......................w
-w.........w...w.........w
-w.........w...w.........w
-w.........w...w.........w
-wwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwww
+w..w...w..w
+w..w...w..w
+w..w...w..w
+w.........w
+w.........w
+w.........w
+w...w.w...w
+w...w.w...w
+w...w.w...w
+w...w.w...w
+wwwwwwwwwww
 
-#mode: sensor  &act		&coll	&update
-#		 8		4		 2		  1
+#mode:	sensor	&act	&coll	&update
+#		8		4		2		1
 
 #obj
-#ID	type	chr	x	y	color		status	group	mode	logic
-O	spike	I_	11	7	white		1		1		3		NAND
-O	spike	I_	12	7	white		1		1		3		NAND
-O	spike	I_	13	7	white		1		1		3		NAND
-O	spike	I_	7	4	white		0		1		3		AND
-O	spike	I_	8	4	white		0		1		3		AND
-O	spike	I_	9	4	white		0		1		3		AND
-O	spike	I_	15	4	white		0		1		3		OR
-O	spike	I_	16	4	white		0		1		3		OR
-O	spike	I_	17	4	white		0		1		3		OR
-O	lever	/\	8	2	white		0		1		13		none
-O	lever	/\	16	2	white		0		1		13		none
-O	door	-	12	10	none		0		1		3		XOR
+#ID	type	x	y	color	status	group	mode	logic
+O	spike	4	3	none	0		1		3		NAND
+O	spike	5	3	none	0		1		3		NAND
+O	spike	6	3	none	0		1		3		NAND
+O	spike	1	7	none	1		1		3		OR
+O	spike	2	7	none	1		1		3		OR
+O	spike	3	7	none	1		1		3		OR
+O	spike	7	7	none	1		1		3		AND
+O	spike	8	7	none	1		1		3		AND
+O	spike	9	7	none	1		1		3		AND
+O	lever	2	9	white	0		1		13		none
+O	lever	8	9	white	0		1		13		none
+O	door	5	0	none	0		1		3		AND
 
 #player
-#ID	type	chr	x	y	color	maxegg
-P	player	P	5	5	white	1
+#ID	type	x	y	color	maxegg	
+P	player	5	5	white	1
 
+H "this is messed up..."
 T "07"

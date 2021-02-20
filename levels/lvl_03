@@ -17,12 +17,11 @@ wwwwwwwwwww
 #obj
 #ID	type	x	y	color	status	group	mode	logic
 O	lever	7	8	green	0		1		13		none
-O	portal	2	8	green	1		0		2		none
+O	portal	3	8	green	1		0		2		none
 O	door	5	0	none	0		1		3		AND
 
 #player
 #ID	type	x	y	color	maxegg	
 P	player	5	5	white	0
 
-H "What even is this place"
-T "02"
+T "03"

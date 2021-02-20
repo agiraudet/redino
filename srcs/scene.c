@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 20:24:30 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 10:04:48 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 10:38:23 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,26 +113,29 @@ void	scene_gen_sprite(SDL_Rect *sprite, int sprite_nb)
 	sprite->h = SPRITE_SIZE;
 }
 
-/*
-void	scene_add_color(t_scene *sc, int x, int y, int hex)
+
+void	scene_blit_sprite_color(t_scene *sc, SDL_Rect *sprite, SDL_Rect *dest, int hex)
 {
-	SDL_Rect	dest;
+	SDL_Surface	*tmp1;
+	SDL_Surface	*tmp2;
 	int			r, g, b;
 
 	r = (hex >> 16) & 0xFF;
 	g = (hex >> 8) & 0xFF;
 	b = hex & 0xFF;
-	dest.x = x;
-	dest.y = y;
-	dest.w = SPRITE_SIZE;
-	dest.h = SPRITE_SIZE;
-	SDL_FillRect(sc->color_mask, 0, SDL_MapRGB(sc->color_mask->format, r, g, b)); 
-	SDL_SetSurfaceColorMod(sc->color_mask, 255, 0, 0);
-	//SDL_BlitSurface(sc->color_mask, 0, sc->surf, &dest);
+	tmp1 = SDL_CreateRGBSurface(0, SPRITE_SIZE, SPRITE_SIZE, 32, 0,0,0,0);
+	tmp2 = SDL_ConvertSurface(tmp1, sc->surf->format, 0);
+	SDL_SetColorKey(tmp2, SDL_TRUE, COLOR_KEY);
+	SDL_SetColorKey(sc->atlas, SDL_FALSE, COLOR_KEY);
+	SDL_BlitScaled(sc->atlas, sprite, tmp2, 0);
+	SDL_SetSurfaceColorMod(tmp2, r, g ,b);
+	SDL_BlitSurface(tmp2, 0, sc->tmp_surf, dest);
+	SDL_SetColorKey(sc->atlas, SDL_TRUE, COLOR_KEY);
+	SDL_FreeSurface(tmp1);
+	SDL_FreeSurface(tmp2);
 }
-*/
 
-void	scene_blit_sprite(t_scene *sc, int sprite_nb, int x, int y)
+void	scene_blit_sprite(t_scene *sc, int sprite_nb, int x, int y, int hex)
 {
 
 	SDL_Rect	sprite;
@@ -145,7 +148,12 @@ void	scene_blit_sprite(t_scene *sc, int sprite_nb, int x, int y)
 	dest.y = (y * SPRITE_SIZE);
 	dest.w = SPRITE_SIZE;
 	dest.h = SPRITE_SIZE;
-	SDL_BlitSurface(sc->atlas, &sprite, sc->tmp_surf, &dest);
+	if (hex >=  0)
+	{
+		scene_blit_sprite_color(sc, &sprite, &dest, hex);
+	}
+	else
+		SDL_BlitSurface(sc->atlas, &sprite, sc->tmp_surf, &dest);
 }
 
 void	scene_update(t_scene *sc)

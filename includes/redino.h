@@ -104,6 +104,7 @@ typedef struct		s_resolution
 
 /* PLAY */
 int					play_all_level(t_scene *sc, const char *lvl_path);
+int					play_one_level(t_scene *sc, char *lvl_path);
 
 /* UTILS */
 char				*ft_strjoin(char const *s1, char const *s2);
@@ -123,7 +124,7 @@ void				scene_set_offset(t_scene *sc, t_level *lvl);
 t_scene				*scene_create(char *title, int wd, int hg);
 void				scene_fill_bg(t_scene *sc, int hex);
 void				scene_destroy(t_scene *sc);
-void				scene_blit_sprite(t_scene *sc, int sprite_nb, int x, int y);
+void				scene_blit_sprite(t_scene *sc, int sprite_nb, int x, int y, int hex);
 int					scene_set_tmp_surf(t_scene *sc, t_level *lvl);
 void				scene_update(t_scene *sc);
 

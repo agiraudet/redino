@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 04:45:52 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 08:59:00 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 10:43:31 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		loader_get_color(const char *str)
 	else if (strcmp(str, "black") == 0)
 		return (BLACK);
 	else
-		return (0);
+		return (-1);
 }
 
 int			*loader_add_sprite(char *sprite_str)

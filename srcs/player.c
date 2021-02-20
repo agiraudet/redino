@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 00:45:42 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 04:56:27 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 11:34:36 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,17 @@
 
 int		player_is_near(t_obj *obj, t_player *plr)
 {
+	if (obj->x == plr->x && obj->y == plr->y)
+		return (1);
+	else
+		return (0);
+	/*
 	if (obj->x == plr->x && (obj->y >= plr->y - 1 && obj->y <= plr->y + 1))
 		return (1);
 	if (obj->y == plr->y && (obj->x >= plr->x - 1 && obj->x <= plr->x + 1))
 		return (1);
 	return (0);
+	*/
 }
 
 int		player_collision(char **map, t_obj *objs, t_player *plr, int y, int x)
