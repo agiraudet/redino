@@ -7,27 +7,27 @@ Everything is WIP as of now.
 
 In order to compile, you need to have the SDL2 librabry installed on your system.
 On debian based distros, run
-'''
+```
 sudo apt get update && sudo apt -y install libsdl2-dev
-'''
+```
 then, clone the repo, and run make:
-'''
+```
 git clone git@github.com:agiraudet/redino.git
 cd redino
 make
-'''
+```
 
 ## Usage
 
 You can play all the availables levels one after the other by just running
-'''
+```
 ./redino
-'''
+```
 
 Or you can play only one level of your choice by typing:
-'''
+```
 ./redino levels/[your_level]
-'''
+```
 
 ## Controls
 
