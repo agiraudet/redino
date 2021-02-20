@@ -1,25 +1,27 @@
-wwwwwwwwwwwwwwwwwwwwwwww
-w......................w
-w......................w
-w......................w
-w......................w
-w......................w
-w......................w
-w......................w
-w......................w
-w......................w
-wwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwww
+w.........w
+w.........w
+w.........w
+w.........w
+w.........w
+w.........w
+w.........w
+w.........w
+w.........w
+w.........w
+wwwwwwwwwww
 
-#mode:  &act	&coll	&update
-#		 4		 2		  1
+#mode:	sensor	&act	&coll	&update
+#		8		4		2		1
 
 #obj
-#ID	type	chr	x	y	color		status	group	mode	logic	sprite	frame
-O	door	-	23	5	bg_white	1		0		2		none	3,13	1
+#ID	type	x	y	color	status	group	mode	logic
+O	door	5	0	none	1		0		3		none
+O	portal	2	8	green	1		0		2		none
 
 #player
-#ID	type	chr	x	y	color	maxegg	spritenb	eggspnb
-P	player	P	5	5	white	1		2			4
+#ID	type	x	y	color	maxegg	
+P	player	5	5	white	1
 
-H "use [wasd] to move"
+H "Hello."
 T "00"

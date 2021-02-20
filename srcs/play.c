@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 18:40:27 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 05:24:04 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 09:37:32 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	play_loop_update(t_scene *sc, t_level *lvl, int old_x, int old_y)
 	render_objs(sc, lvl->objs, lvl->map);
 	render_egg(sc, lvl->plr);
 	render_player(sc, lvl->plr);
-	SDL_UpdateWindowSurface(sc->win);
+	scene_update(sc);
 }
 
 int		play_level(t_scene *sc, t_level *lvl)
@@ -92,7 +92,8 @@ int		play_all_level(t_scene *sc, const char *lvl_path)
 		lvl = level_load(lvl_name);
 		if (!lvl)
 			return (0);
-		scene_set_offset(sc, lvl->map);
+		scene_set_offset(sc, lvl);
+		scene_set_tmp_surf(sc, lvl);
 		stat = play_level(sc, lvl);
 		level_destroy(lvl);
 		free(lvl_name);

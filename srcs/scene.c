@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 20:24:30 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 05:06:37 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 10:04:48 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,48 @@ void	scene_fill_bg(t_scene *sc, int hex)
 void	scene_destroy(t_scene *sc)
 {
 	if (sc->atlas)
-	{
 		SDL_FreeSurface(sc->atlas);
-		sc->atlas = 0;
-	}
+	if (sc->tmp_surf)
+		SDL_FreeSurface(sc->tmp_surf);
 	if (sc->win)
-	{
 		SDL_DestroyWindow(sc->win);
-		sc->win = 0;
-		sc->surf = 0;
-	}
 	SDL_Quit();
 	free(sc);
 }
 
 int		scene_load_atlas(t_scene *sc, char *atlas_path)
 {
-	sc->atlas = SDL_LoadBMP(atlas_path);
-	if (!sc->atlas)
+	SDL_Surface	*tmp;
+	tmp = SDL_LoadBMP(atlas_path);
+	if (!tmp)
 	{
 		printf("SDL Atlas loading Error: %s\n", SDL_GetError());
+		return (0);
+	}
+	sc->atlas = SDL_ConvertSurface(tmp, sc->surf->format, 0);
+	SDL_SetColorKey(sc->atlas, SDL_TRUE, COLOR_KEY);
+	SDL_FreeSurface(tmp);
+	return (1);
+}
+
+int		scene_set_tmp_surf(t_scene *sc, t_level *lvl)
+{
+	SDL_Surface	*tmp;
+
+	if (sc->tmp_surf)
+		SDL_FreeSurface(sc->tmp_surf);
+	tmp = SDL_CreateRGBSurface(0, lvl->map_size_x, lvl->map_size_y, 32, 0, 0, 0, 0);
+	if (!tmp)
+	{
+		free(sc);
+		return (0);
+	}
+	sc->tmp_surf = SDL_ConvertSurface(tmp, sc->surf->format, 0);
+	SDL_SetColorKey(sc->tmp_surf, SDL_TRUE, COLOR_KEY);
+	SDL_FreeSurface(tmp);
+	if (!sc->tmp_surf)
+	{
+		free(sc);
 		return (0);
 	}
 	return (1);
@@ -63,8 +85,7 @@ t_scene		*scene_create(char *title, int wd, int hg)
 	sc->atlas = 0;
 	sc->wd = wd;
 	sc->hg = hg;
-	sc->off_x = 0;
-	sc->off_y = 0;
+	sc->tmp_surf = 0;
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		printf("SDL_INIT_VIDEO Error: %s\n", SDL_GetError());
@@ -80,6 +101,7 @@ t_scene		*scene_create(char *title, int wd, int hg)
 		return (0);
 	}
 	sc->surf = SDL_GetWindowSurface(sc->win);
+	SDL_FillRect(sc->surf, 0, SDL_MapRGB(sc->surf->format, 0, 0, 0));
 	return (sc);
 }
 
@@ -91,19 +113,45 @@ void	scene_gen_sprite(SDL_Rect *sprite, int sprite_nb)
 	sprite->h = SPRITE_SIZE;
 }
 
+/*
+void	scene_add_color(t_scene *sc, int x, int y, int hex)
+{
+	SDL_Rect	dest;
+	int			r, g, b;
+
+	r = (hex >> 16) & 0xFF;
+	g = (hex >> 8) & 0xFF;
+	b = hex & 0xFF;
+	dest.x = x;
+	dest.y = y;
+	dest.w = SPRITE_SIZE;
+	dest.h = SPRITE_SIZE;
+	SDL_FillRect(sc->color_mask, 0, SDL_MapRGB(sc->color_mask->format, r, g, b)); 
+	SDL_SetSurfaceColorMod(sc->color_mask, 255, 0, 0);
+	//SDL_BlitSurface(sc->color_mask, 0, sc->surf, &dest);
+}
+*/
+
 void	scene_blit_sprite(t_scene *sc, int sprite_nb, int x, int y)
 {
+
 	SDL_Rect	sprite;
 	SDL_Rect	dest;
 
 	if (sprite_nb < 0)
 		return ;
 	scene_gen_sprite(&sprite, sprite_nb);
-	dest.x = (x * SPRITE_SIZE) + sc->off_x;
-	dest.y = (y * SPRITE_SIZE) + sc->off_y;
+	dest.x = (x * SPRITE_SIZE);
+	dest.y = (y * SPRITE_SIZE);
 	dest.w = SPRITE_SIZE;
 	dest.h = SPRITE_SIZE;
-	SDL_BlitSurface(sc->atlas, &sprite, sc->surf, &dest);
+	SDL_BlitSurface(sc->atlas, &sprite, sc->tmp_surf, &dest);
+}
+
+void	scene_update(t_scene *sc)
+{
+	SDL_BlitScaled(sc->tmp_surf, 0, sc->surf, &sc->offset);
+	SDL_UpdateWindowSurface(sc->win);
 }
 
 int		scene_get_sprite_nb(char c)
@@ -115,25 +163,26 @@ int		scene_get_sprite_nb(char c)
 	return (-1);
 }
 
-void	scene_set_offset(t_scene *sc, char **map)
+void	scene_set_offset(t_scene *sc, t_level *lvl)
 {
-	int		size_x;
-	int		loc_x;
-	int		size_y;
+	int		virt_wd;
+	int		virt_hg;
 
-	size_x = 0;
-	size_y = 0;
-	while (map[size_y])
+	virt_wd = sc->wd - MARGIN * 2;
+	virt_hg = sc->hg - MARGIN * 2;
+
+	if (virt_wd % lvl->map_size_x > virt_hg % lvl->map_size_y)
 	{
-		loc_x = 0;
-		while (map[size_y][loc_x])
-			loc_x++;
-		if (size_x < loc_x)
-			size_x = loc_x;
-		size_y++;
+		sc->offset.h = virt_hg;
+		sc->offset.y = MARGIN;
+		sc->offset.w = lvl->map_size_x * (virt_hg / lvl->map_size_y);
+		sc->offset.x = (sc->wd - sc->offset.w) / 2;
 	}
-	size_x *= SPRITE_SIZE;
-	size_y *= SPRITE_SIZE;
-	sc->off_x = (sc->wd - size_x) / 2;
-	sc->off_y = (sc->hg - size_y) / 2;
+	else
+	{
+		sc->offset.w = virt_wd;
+		sc->offset.x = MARGIN;
+		sc->offset.h = lvl->map_size_y * (virt_wd / lvl->map_size_x);
+		sc->offset.y = (sc->hg - sc->offset.w) / 2;
+	}
 }

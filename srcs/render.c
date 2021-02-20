@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render2.c                                          :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 23:03:17 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 05:07:33 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 09:12:56 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ void	render_level(t_scene *sc ,t_level *lvl)
 	render_objs(sc, lvl->objs, lvl->map);
 	render_egg(sc, lvl->plr);
 	render_player(sc, lvl->plr);
-	SDL_UpdateWindowSurface(sc->win);
+	scene_update(sc);
 }

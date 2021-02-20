@@ -6,7 +6,7 @@
 #    By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/06 15:43:27 by agiraude          #+#    #+#              #
-#    Updated: 2021/02/20 04:54:24 by agiraude         ###   ########.fr        #
+#    Updated: 2021/02/20 05:27:50 by agiraude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS_FILE		=	main.c \
 					logic.c \
 					controller.c \
 					level.c \
-					render2.c \
+					render.c \
 					utils.c \
 					egg.c \
 					scene.c \

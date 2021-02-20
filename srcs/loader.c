@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 04:45:52 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 05:13:04 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 08:59:00 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,6 +252,8 @@ t_level	*loader_lvl_create(void)
 	lvl->plr = 0;
 	lvl->hint = 0;
 	lvl->name = 0;
+	lvl->map_size_x = 0;
+	lvl->map_size_y = 0;
 	return (lvl);
 }
 
