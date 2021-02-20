@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 01:35:33 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 17:01:18 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 02:57:13 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int		obj_lever_coll(t_obj *self, t_player *plr)
 void	obj_lever_update(t_obj *self)
 {
 	if (self->status == ACT)
-		self->pch[0] = self->chr[0];
+		self->frame = 1;
 	else
-		self->pch[0] = self->chr[1];
+		self->frame = 0;
 }
 
 void	obj_lever_init_fct(t_ctl *ctl, int fct)

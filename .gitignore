@@ -1,3 +1,5 @@
 redino
 srcs/*.o
 srcs/*/*.o
+a.out
+sdl_test

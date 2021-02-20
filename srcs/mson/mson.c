@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 17:52:30 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 17:23:13 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 02:33:23 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,38 @@ int		mson_get_color(const char *str)
 		return (0);
 }
 
+int			*mson_add_sprite(char *token)
+{
+	char	**list_sprite;
+	int		*arr;
+	int		i;
+
+	if (!(list_sprite = ft_nsplit(token, ",")))
+		return (0);
+	i = 0;
+	while (list_sprite[i])
+		i++;
+	if (!(arr = malloc(sizeof(int) * (i + 1))))
+	{
+		mson_destroy_token(list_sprite);
+		return (0);
+	}
+	i = 0;
+	while (list_sprite[i])
+	{
+		arr[i] = atoi(list_sprite[i]);
+		i++;
+	}
+	mson_destroy_token(list_sprite);
+	return (arr);
+}
+
 t_player	*mson_add_plr(const char *line)
 {
 	char	**token;
 	t_player	*plr;
 
-	if (!(token = ft_nsplit(line, " ,\t")))
+	if (!(token = ft_nsplit(line, " \t")))
 		return (0);
 	if (!(plr = malloc(sizeof(t_player))))
 	{
@@ -135,6 +161,8 @@ t_player	*mson_add_plr(const char *line)
 	plr->x = atoi(token[3]);
 	plr->y = atoi(token[4]);
 	plr->color = mson_get_color(token[5]);
+	plr->sprite_nb = atoi(token[7]);
+	plr->egg_sprite_nb = atoi(token[8]);
 	mson_destroy_token(token);
 	return (plr);
 }
@@ -145,7 +173,7 @@ void	mson_add_obj(t_obj **objs, const char *line)
 	t_obj	*obj_tmp;
 	t_ctl	*ctl_tmp;
 	
-	if (!(token = ft_nsplit(line, " ,\t")))
+	if (!(token = ft_nsplit(line, " \t")))
 		return ;
 	if (!(obj_tmp = malloc(sizeof(t_obj))))
 	{
@@ -165,6 +193,8 @@ void	mson_add_obj(t_obj **objs, const char *line)
 	obj_tmp->y = atoi(token[4]);
 	obj_tmp->color = mson_get_color(token[5]);
 	obj_tmp->status = atoi(token[6]);
+	obj_tmp->sprite = mson_add_sprite(token[10]);
+	obj_tmp->frame = atoi(token[11]);
 	obj_tmp->ctl = ctl_tmp;
 	obj_tmp->next = 0;
 	object_add(objs, obj_tmp);

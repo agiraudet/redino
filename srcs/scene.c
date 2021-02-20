@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 20:24:30 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 22:52:09 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 01:15:44 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_scene		*scene_create(char *title, int wd, int hg)
 	sc->atlas = 0;
 	sc->wd = wd;
 	sc->hg = hg;
+	sc->off_x = 0;
+	sc->off_y = 0;
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		printf("SDL_INIT_VIDEO Error: %s\n", SDL_GetError());
@@ -95,8 +97,8 @@ void	scene_blit_sprite(t_scene *sc, int sprite_nb, int x, int y)
 	if (sprite_nb < 0)
 		return ;
 	scene_gen_sprite(&sprite, sprite_nb);
-	dest.x = x;
-	dest.y = y;
+	dest.x = (x * SPRITE_SIZE) + sc->off_x;
+	dest.y = (y * SPRITE_SIZE) + sc->off_y;
 	dest.w = SPRITE_SIZE;
 	dest.h = SPRITE_SIZE;
 	SDL_BlitSurface(sc->atlas, &sprite, sc->surf, &dest);
@@ -111,7 +113,7 @@ int		scene_get_sprite_nb(char c)
 	return (-1);
 }
 
-void	scene_center_map(t_scene *sc, char **map, int *off_x, int *off_y)
+void	scene_set_offset(t_scene *sc, char **map)
 {
 	int		size_x;
 	int		loc_x;
@@ -130,27 +132,6 @@ void	scene_center_map(t_scene *sc, char **map, int *off_x, int *off_y)
 	}
 	size_x *= SPRITE_SIZE;
 	size_y *= SPRITE_SIZE;
-	*off_x = (sc->wd - size_x) / 2;
-	*off_y = (sc->hg - size_y) / 2;
-}
-
-void	scene_blit_map(t_scene *sc, char **map)
-{
-	int		y;
-	int		x;
-	int		off_y;
-	int		off_x;
-
-	scene_center_map(sc, map, &off_x, &off_y);
-	y = 0;
-	while (map[y])
-	{
-		x = 0;
-		while (map[y][x])
-		{
-			scene_blit_sprite(sc, scene_get_sprite_nb(map[y][x]), x * SPRITE_SIZE + off_x, y * SPRITE_SIZE + off_y);
-			x++;
-		}
-		y++;
-	}
+	sc->off_x = (sc->wd - size_x) / 2;
+	sc->off_y = (sc->hg - size_y) / 2;
 }

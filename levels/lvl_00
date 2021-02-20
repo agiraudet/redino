@@ -14,12 +14,12 @@ wwwwwwwwwwwwwwwwwwwwwwww
 #		 4		 2		  1
 
 #obj
-#ID	type	chr	x	y	color		status	group	mode	logic
-O	door	-	23	5	bg_white	1		0		2		none
+#ID	type	chr	x	y	color		status	group	mode	logic	sprite	frame
+O	door	-	23	5	bg_white	1		0		2		none	3,13	1
 
 #player
-#ID	type	chr	x	y	color	maxegg
-P	player	P	5	5	white	0
+#ID	type	chr	x	y	color	maxegg	spritenb	eggspnb
+P	player	P	5	5	white	1		2			4
 
 H "use [wasd] to move"
 T "00"

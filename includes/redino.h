@@ -53,6 +53,8 @@ typedef struct	s_scene
 	SDL_Surface	*atlas;
 	int			wd;
 	int			hg;
+	int			off_x;
+	int			off_y;
 }				t_scene;
 
 typedef struct	s_egg
@@ -64,6 +66,8 @@ typedef struct	s_egg
 
 typedef struct		s_player
 {
+	int				sprite_nb;
+	int				egg_sprite_nb;
 	int				x;
 	int				y;
 	int				color;
@@ -76,6 +80,8 @@ typedef struct		s_player
 
 typedef struct		s_object
 {
+	int				frame;
+	int				*sprite;
 	char			*chr;
 	char			pch[2];
 	int				status;
@@ -127,6 +133,8 @@ void				init_ncurse(void);
 /* PLAY */
 int					play_all_lvl(const char *lvl_path);
 int					play_solo_lvl(char *lvl_path);
+int					play_level_sdl(t_scene *sc, t_level *lvl);
+int					play_all_level_sdl(t_scene *sc, const char *lvl_path);
 
 /* UTILS */
 char				*ft_strjoin(char const *s1, char const *s2);
@@ -137,6 +145,26 @@ void				render_clean_screen(void);
 void				render_level(t_level *lvl);
 void				render_one_egg(t_egg *egg);
 void				render_set_res(char **map);
+
+/* RENDER2 */
+void	render_map_sdl(t_scene *sc, char **map);
+void	render_objs_sdl(t_scene *sc, t_obj *objs, char **map);
+void	render_egg_sdl(t_scene *sc, t_player *plr);
+void	render_player_sdl(t_scene *sc, t_player *plr);
+void	render_level_sdl(t_scene *sc ,t_level *lvl);
+
+/* SCENE */
+
+int					scene_get_sprite_nb(char c);
+void				scene_set_offset(t_scene *sc, char **map);
+t_scene		*scene_create(char *title, int wd, int hg);
+void		scene_fill_bg(t_scene *sc, int hex);
+void		scene_destroy(t_scene *sc);
+int		scene_load_atlas(t_scene *sc, char *atlas_path);
+void		scene_gen_sprite(SDL_Rect *sprite, int sprite_nb);
+void		scene_blit_sprite(t_scene *sc, int sprite_nb, int x, int y);
+void		scene_center_map(t_scene *sc, char **map, int *off_x, int *off_y);
+void		scene_blit_map(t_scene *sc, char **map);
 
 /* LEVEL */
 t_level				*level_load(char *lvl_file);
@@ -162,8 +190,10 @@ void				object_add(t_obj **obj_lst, t_obj *obj);
 
 /* PLAYER */
 int					player_is_near(t_obj *obj, t_player *plr);
+int					player_collision_sdl(t_level *lvl, SDL_Event event);
 int					player_collision(char **map, t_obj *objs, t_player *plr, int y, int x);
 int					player_move(char **map, t_obj *obj, t_player *plr);
+int					player_move_sdl(t_level *lvl, SDL_Event event);
 
 /* CONTROLLER */
 void				ctl_destroy(t_ctl *ctl);

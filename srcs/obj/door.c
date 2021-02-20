@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 13:42:58 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/19 15:51:32 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 02:37:57 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ void	obj_door_update(t_obj *self)
 	if (self->ctl->logic(parent_up, i) == 1)
 	{
 		self->status = ACT;
-		self->color = BG_WHITE;
+		self->frame = 1;
 	}
 	else
 	{
 		self->status = DEACT;
-		self->color = BG_BLACK;
+		self->frame = 0;
 	}
 }
 
