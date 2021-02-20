@@ -6,7 +6,7 @@
 #    By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/06 15:43:27 by agiraude          #+#    #+#              #
-#    Updated: 2021/02/20 05:27:50 by agiraude         ###   ########.fr        #
+#    Updated: 2021/02/20 16:34:00 by agiraude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			=	redino
 
 INC_DIR			=	-I includes/
 
-DEP				=	-lncurses -lSDL2
+DEP				=	-lSDL2
 
 SRCS_FILE		=	main.c \
 					play.c \
@@ -42,7 +42,7 @@ SRCS			=	$(addprefix $(SRCS_DIR), $(SRCS_FILE))
 
 OBJS			=	$(SRCS:.c=.o)
 
-CFLAGS			=	-Wall -g -Wextra $(INC_DIR)
+CFLAGS			=	-Wall -Wextra $(INC_DIR)
 
 CC				=	clang
 
@@ -51,7 +51,6 @@ CC				=	clang
 
 $(NAME):		$(OBJS) 
 				$(CC) $(CFLAGS) $(OBJS) $(DEP) -o $(NAME)
-
 
 all:			$(NAME)
 

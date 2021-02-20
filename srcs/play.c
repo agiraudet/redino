@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 18:40:27 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 11:55:15 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 18:55:02 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,21 +71,28 @@ int		play_one_level(t_scene *sc, char *lvl_path)
 {
 	t_level	*lvl;
 	int		stat;
+
 	if (!play_lvl_exist(lvl_path))
 		return (0);
-	lvl = level_load(lvl_path);
-	scene_set_offset(sc, lvl);
-	scene_set_tmp_surf(sc, lvl);
-	stat = play_level(sc, lvl);
-	level_destroy(lvl);
-	return (1);
+	stat = 0;
+	while (stat >= 0)
+	{
+		lvl = level_load(lvl_path);
+		scene_set_offset(sc, lvl);
+		scene_set_tmp_surf(sc, lvl);
+		stat = play_level(sc, lvl);
+		level_destroy(lvl);
+		if (lvl->plr->win)
+			return (1);
+	}
+	return (0);
 }
 
 int		play_all_level(t_scene *sc, const char *lvl_path)
 {
 	char		*lvl_list[] =
 	{"lvl_00", "lvl_01", "lvl_02", "lvl_03", "lvl_04",
-	"lvl_05", "lvl_06", "lvl_07", "lvl_08", 0};
+	"lvl_05", "lvl_06", "lvl_07", "lvl_08", "lvl_09", 0};
 
 	char		*lvl_name;
 	t_level		*lvl;

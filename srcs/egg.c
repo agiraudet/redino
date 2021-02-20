@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 00:52:14 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 04:04:16 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 18:31:32 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	egg_hatch(t_player *plr)
 	{
 		plr->x = plr->egg[plr->egc - 1].x;
 		plr->y = plr->egg[plr->egc - 1].y;
-		plr->color =  plr->egg[plr->egc - 1].color;
+//		plr->color =  plr->egg[plr->egc - 1].color;
 		plr->egc--;
 	}
 }

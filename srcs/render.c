@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 23:03:17 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 10:40:10 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/20 18:31:52 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	render_egg(t_scene *sc, t_player *plr)
 	while (i >= 0)
 	{
 		scene_blit_sprite(sc, plr->sprite_egg[plr->egg[i].frame],
-				plr->egg[i].x, plr->egg[i].y, plr->egg[i].color);
+				plr->egg[i].x, plr->egg[i].y, plr->color);
 		i--;
 	}
 }
