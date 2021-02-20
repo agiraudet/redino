@@ -44,15 +44,7 @@ No fancy level editor is implemented right now, but the game loads levels based 
 (Their is almost no checking as if a level file is valid or not right now, so dont get surprised if you get a segfault each time something is wrong in a level file).
 If the first character of a line is '#', the line is ignored (used for commenting).
 The files first need a map composed of 'w' for the walls and '.' for the floor.
-It should be completly closed, as in this exemple :
-'''
-wwwwwwwwww
-w........wwww
-w...........w
-wwww........w
-   w........w
-   wwwwwwwwww
-'''
+It should be completly closed.
 
 Each object you want to add to your level must be describde by one line, starting by an 'O'.
 Each setting must be in the correct order, and separeted by spaces and/or tabulations.
