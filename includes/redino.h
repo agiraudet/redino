@@ -105,6 +105,7 @@ typedef struct		s_resolution
 /* PLAY */
 int					play_all_level(t_scene *sc, const char *lvl_path);
 int					play_one_level(t_scene *sc, char *lvl_path);
+int					play_level(t_scene *sc, t_level *lvl);
 
 /* UTILS */
 char				*ft_strjoin(char const *s1, char const *s2);
@@ -166,6 +167,8 @@ void				obj_spike_init_fct(t_ctl *ctl, int fct);
 void				obj_check_init_fct(t_ctl *ctl, int fct);
 
 /* LOADER */
+t_level				*loader_lvl_create(void);
 t_level				*loader_parse_file(char *file);
+void				loader_parse_line(t_level *lvl, const char *line);
 
 #endif
