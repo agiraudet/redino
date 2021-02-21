@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 00:52:14 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 18:31:32 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/21 18:24:28 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int		egg_drop(t_player *plr)
 	{
 		plr->egg[plr->egc].x = plr->x;
 		plr->egg[plr->egc].y = plr->y;
-		plr->egg[plr->egc].color = plr->color;
 		plr->egg[plr->egc].frame = 0;
 		plr->egc++;
 		return (1);
@@ -46,7 +45,6 @@ void	egg_hatch(t_player *plr)
 	{
 		plr->x = plr->egg[plr->egc - 1].x;
 		plr->y = plr->egg[plr->egc - 1].y;
-//		plr->color =  plr->egg[plr->egc - 1].color;
 		plr->egc--;
 	}
 }

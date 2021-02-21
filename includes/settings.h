@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 03:56:29 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 11:11:31 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/21 18:31:29 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define TITLE			"redino"
 # define WIN_WD			1280
 # define WIN_HG			720
+# define SCALE			3
 
 # define SPRITE_SIZE	16
 # define ATLAS_SIZE		160

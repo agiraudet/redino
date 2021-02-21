@@ -27,10 +27,8 @@
 typedef struct		s_scene
 {
 	SDL_Window		*win;
-	SDL_Surface		*surf;
-	SDL_Surface		*atlas;
-	SDL_Surface		*tmp_surf;
-	SDL_Rect		offset;
+	SDL_Renderer	*ren;
+	SDL_Texture		*atlas;
 	int				wd;
 	int				hg;
 }					t_scene;
@@ -39,7 +37,6 @@ typedef struct		s_egg
 {
 	int				x;
 	int				y;
-	int				color;
 	int				frame;
 }					t_egg;
 
@@ -108,26 +105,17 @@ int					play_one_level(t_scene *sc, char *lvl_path);
 int					play_level(t_scene *sc, t_level *lvl);
 
 /* UTILS */
+void				hex_to_rgb(int hex, int *r, int *g, int *b);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				**ft_nsplit(const char *str, const char *sep);
 
 /* RENDER */
-void				render_map(t_scene *sc, char **map);
-void				render_objs(t_scene *sc, t_obj *objs, char **map);
-void				render_egg(t_scene *sc, t_player *plr);
-void				render_player(t_scene *sc, t_player *plr);
-void				render_level(t_scene *sc ,t_level *lvl);
+void				render_level(t_scene *sc , t_level *lvl);
+void				render_set_offset(t_scene *sc, t_level *lvl);
 
 /* SCENE */
-int					scene_load_atlas(t_scene *sc, char *atlas_path);
-int					scene_get_sprite_nb(char c);
-void				scene_set_offset(t_scene *sc, t_level *lvl);
-t_scene				*scene_create(char *title, int wd, int hg);
-void				scene_fill_bg(t_scene *sc, int hex);
 void				scene_destroy(t_scene *sc);
-void				scene_blit_sprite(t_scene *sc, int sprite_nb, int x, int y, int hex);
-int					scene_set_tmp_surf(t_scene *sc, t_level *lvl);
-void				scene_update(t_scene *sc);
+t_scene				*scene_create(char *title, int wd, int hg, const char *atlas_path);
 
 /* LEVEL */
 t_level				*level_load(char *lvl_file);

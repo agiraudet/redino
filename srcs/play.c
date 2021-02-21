@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 18:40:27 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 18:55:02 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/21 18:41:02 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,12 @@ int		play_lvl_exist(const char *file)
 		return (0);
 }
 
-void	play_loop_update(t_scene *sc, t_level *lvl, int old_x, int old_y)
-{
-	object_update(lvl->objs);
-	scene_blit_sprite(sc, scene_get_sprite_nb(lvl->map[old_y][old_x]), old_x, old_y, -1);
-	scene_blit_sprite(sc, scene_get_sprite_nb(lvl->map[lvl->plr->y][lvl->plr->x]), lvl->plr->x, lvl->plr->y, -1);
-	render_objs(sc, lvl->objs, lvl->map);
-	render_egg(sc, lvl->plr);
-	render_player(sc, lvl->plr);
-	scene_update(sc);
-}
-
 int		play_level(t_scene *sc, t_level *lvl)
 {
 	SDL_Event	event;
 	int			stat;
-	int			old_x;
-	int			old_y;
 
-	scene_fill_bg(sc, 0x0);
+	render_set_offset(sc, lvl);
 	object_update(lvl->objs);
 	render_level(sc, lvl);
 	while (1)
@@ -53,16 +40,15 @@ int		play_level(t_scene *sc, t_level *lvl)
 				return (0);
 			else if (event.type == SDL_KEYDOWN)
 			{
-				old_x = lvl->plr->x;
-				old_y = lvl->plr->y;
 				stat = player_move(lvl, event);
-				play_loop_update(sc, lvl, old_x, old_y);
+				object_update(lvl->objs);
 				if (lvl->plr->win)
 					return (1);
 				if (stat != 1)
 					return (stat);
 			}
 		}
+		render_level(sc, lvl);
 	}
 	return (0);
 }
@@ -78,8 +64,6 @@ int		play_one_level(t_scene *sc, char *lvl_path)
 	while (stat >= 0)
 	{
 		lvl = level_load(lvl_path);
-		scene_set_offset(sc, lvl);
-		scene_set_tmp_surf(sc, lvl);
 		stat = play_level(sc, lvl);
 		level_destroy(lvl);
 		if (lvl->plr->win)
@@ -113,8 +97,6 @@ int		play_all_level(t_scene *sc, const char *lvl_path)
 		lvl = level_load(lvl_name);
 		if (!lvl)
 			return (0);
-		scene_set_offset(sc, lvl);
-		scene_set_tmp_surf(sc, lvl);
 		stat = play_level(sc, lvl);
 		level_destroy(lvl);
 		free(lvl_name);

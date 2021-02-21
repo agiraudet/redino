@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 15:07:37 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 09:25:36 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/21 18:44:48 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void		level_set_map_size(t_level *lvl)
 			max_x = x;
 		y++;
 	}
-	lvl->map_size_x = max_x * SPRITE_SIZE;
-	lvl->map_size_y = y * SPRITE_SIZE;
+	lvl->map_size_x = max_x;
+	lvl->map_size_y = y;
 }
 
 t_level		*level_load(char *lvl_file)
