@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 04:45:52 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 10:43:31 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/21 22:56:25 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +165,8 @@ t_player	*loader_add_plr(const char *line)
 	}
 	plr->win = 0;
 	plr->egc = 0;
-	plr->x = atoi(token[2]);
-	plr->y = atoi(token[3]);
+	plr->x = (double)atoi(token[2]);
+	plr->y = (double)atoi(token[3]);
 	plr->color = loader_get_color(token[4]);
 	plr->sprite = loader_add_sprite(PLAYER_SPRITE);
 	plr->sprite_egg = loader_add_sprite(EGG_SPRITE);
@@ -231,7 +231,7 @@ void	loader_parse_line(t_level *lvl, const char *line)
 {
 	if (*line == 'O')
 		loader_add_obj(&lvl->objs, line);
-	else if (*line == 'w' || *line == ' ')
+	else if (*line == 'w' || *line == ' ' || *line == 'W')
 		loader_add_map(lvl->map, line);
 	else if (*line == 'P')
 		lvl->plr = loader_add_plr(line);
@@ -254,6 +254,7 @@ t_level	*loader_lvl_create(void)
 	lvl->name = 0;
 	lvl->map_size_x = 0;
 	lvl->map_size_y = 0;
+	lvl->tm = 0;
 	return (lvl);
 }
 

@@ -1,14 +1,16 @@
-wwwwwwwwwww
-w..w...w..w
-w..w...w..w
-w.........w
-w.........w
-w.........w
-w.........w
-w.........w
-w.........w
-w.........w
-w.........w
+WWWWWWWWWWW
+WwwWwwwWwwW
+W..W...W..W
+W..W...W..W
+W..w...w..W
+W.........W
+W.........W
+W.........W
+W.........W
+W.........W
+W.........W
+W.........W
+WWWWWWWWWWW
 wwwwwwwwwww
 
 #mode:	sensor	&act	&coll	&update
@@ -16,15 +18,15 @@ wwwwwwwwwww
 
 #obj
 #ID	type	x	y	color	status	group	mode	logic
-O	check	4	2	green	1		0		2		none
-O	check	5	2	green	1		0		2		none
-O	check	6	2	green	1		0		2		none
-O	portal	5	9	green	1		0		2		none
-O	door	5	0	none	1		0		3		none
+O	check	4	3	green	1		0		2		none
+O	check	5	3	green	1		0		2		none
+O	check	6	3	green	1		0		2		none
+O	portal	5	10	green	1		0		2		none
+O	door	5	1	none	1		0		3		none
 
 #player
 #ID	type	x	y	color	maxegg	
-P	player	5	5	white	0
+P	player	5	6	White	0
 
 H "Am I dead or something ?"
 T "04"

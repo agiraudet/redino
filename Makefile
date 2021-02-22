@@ -6,7 +6,7 @@
 #    By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/06 15:43:27 by agiraude          #+#    #+#              #
-#    Updated: 2021/02/20 16:34:00 by agiraude         ###   ########.fr        #
+#    Updated: 2021/02/21 23:31:33 by agiraude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			=	redino
 
 INC_DIR			=	-I includes/
 
-DEP				=	-lSDL2
+DEP				=	-lSDL2 -lSDL2_ttf -lm
 
 SRCS_FILE		=	main.c \
 					play.c \
@@ -27,6 +27,7 @@ SRCS_FILE		=	main.c \
 					utils.c \
 					egg.c \
 					scene.c \
+					text.c \
 					loader.c \
 					gnl/get_next_line.c \
 					gnl/get_next_line_utils.c \
@@ -42,7 +43,7 @@ SRCS			=	$(addprefix $(SRCS_DIR), $(SRCS_FILE))
 
 OBJS			=	$(SRCS:.c=.o)
 
-CFLAGS			=	-Wall -Wextra $(INC_DIR)
+CFLAGS			=	-Wall -g -Wextra $(INC_DIR)
 
 CC				=	clang
 

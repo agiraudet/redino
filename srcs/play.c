@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 18:40:27 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/21 18:41:02 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/22 01:37:52 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int		play_level(t_scene *sc, t_level *lvl)
 	SDL_Event	event;
 	int			stat;
 
-	render_set_offset(sc, lvl);
-	object_update(lvl->objs);
 	render_level(sc, lvl);
 	while (1)
 	{
@@ -46,9 +44,9 @@ int		play_level(t_scene *sc, t_level *lvl)
 					return (1);
 				if (stat != 1)
 					return (stat);
+				render_level(sc, lvl);
 			}
 		}
-		render_level(sc, lvl);
 	}
 	return (0);
 }
@@ -64,6 +62,7 @@ int		play_one_level(t_scene *sc, char *lvl_path)
 	while (stat >= 0)
 	{
 		lvl = level_load(lvl_path);
+		level_init(sc, lvl);
 		stat = play_level(sc, lvl);
 		level_destroy(lvl);
 		if (lvl->plr->win)
@@ -95,6 +94,7 @@ int		play_all_level(t_scene *sc, const char *lvl_path)
 			continue ;
 		}
 		lvl = level_load(lvl_name);
+		level_init(sc, lvl);
 		if (!lvl)
 			return (0);
 		stat = play_level(sc, lvl);

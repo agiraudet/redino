@@ -1,14 +1,16 @@
-wwwwwwwwwww
-w..w...w..w
-w..w...w..w
-w..w...w..w
-w..w...w..w
-w.........w
-w.........w
-w..w...w..w
-w..w...w..w
-w..w...w..w
-w..w...w..w
+WWWWWWWWWWW
+WwwWwwwWwwW
+W..W...W..W
+W..W...W..W
+W..W...W..W
+W..W...W..W
+W..w...w..W
+W.........W
+W..W...W..W
+W..W...W..W
+W..W...W..W
+W..W...W..W
+WWWWWWWWWWW
 wwwwwwwwwww
 
 #mode:	sensor	&act	&coll	&update
@@ -16,18 +18,18 @@ wwwwwwwwwww
 
 #obj
 #ID	type	x	y	color	status	group	mode	logic
-O	spike	4	4	none	0		1		3		NAND
-O	spike	5	4	none	0		1		3		NAND
-O	spike	6	4	none	0		1		3		NAND
-O	spike	4	7	none	1		1		3		AND
-O	spike	5	7	none	1		1		3		AND
-O	spike	6	7	none	1		1		3		AND
-O	lever	5	9	white	0		1		13		none
-O	door	5	0	none	1		0		3		none
+O	spike	4	5	none	0		1		3		NAND
+O	spike	5	5	none	0		1		3		NAND
+O	spike	6	5	none	0		1		3		NAND
+O	spike	4	8	none	1		1		3		AND
+O	spike	5	8	none	1		1		3		AND
+O	spike	6	8	none	1		1		3		AND
+O	lever	5	10	none	0		1		13		none
+O	door	5	1	none	1		0		3		none
 
 #player
 #ID	type	x	y	color	maxegg	
-P	player	5	5	white	1
+P	player	5	7	White	1
 
 H "I feel like pressing space... and maybe R ?"
 T "06"

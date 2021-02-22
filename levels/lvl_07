@@ -1,14 +1,16 @@
-wwwwwwwwwww
-w..w...w..w
-w..w...w..w
-w..w...w..w
-w.........w
-w.........w
-w.........w
-w...w.w...w
-w...w.w...w
-w...w.w...w
-w...w.w...w
+WWWWWWWWWWW
+WwwWwwwWwwW
+W..W...W..W
+W..W...W..W
+W..W...W..W
+W..w...w..W
+W.........W
+W.........W
+W...W.W...W
+W...W.W...W
+W...W.W...W
+W...W.W...W
+WWWWWWWWWWW
 wwwwwwwwwww
 
 #mode:	sensor	&act	&coll	&update
@@ -16,22 +18,22 @@ wwwwwwwwwww
 
 #obj
 #ID	type	x	y	color	status	group	mode	logic
-O	spike	4	3	none	0		1		3		NAND
-O	spike	5	3	none	0		1		3		NAND
-O	spike	6	3	none	0		1		3		NAND
-O	spike	1	7	none	1		1		3		OR
-O	spike	2	7	none	1		1		3		OR
-O	spike	3	7	none	1		1		3		OR
-O	spike	7	7	none	1		1		3		AND
-O	spike	8	7	none	1		1		3		AND
-O	spike	9	7	none	1		1		3		AND
-O	lever	2	9	white	0		1		13		none
-O	lever	8	9	white	0		1		13		none
-O	door	5	0	none	0		1		3		AND
+O	spike	4	4	none	0		1		3		NAND
+O	spike	5	4	none	0		1		3		NAND
+O	spike	6	4	none	0		1		3		NAND
+O	spike	1	8	none	1		1		3		OR
+O	spike	2	8	none	1		1		3		OR
+O	spike	3	8	none	1		1		3		OR
+O	spike	7	8	none	1		1		3		AND
+O	spike	8	8	none	1		1		3		AND
+O	spike	9	8	none	1		1		3		AND
+O	lever	2	10	White	0		1		13		none
+O	lever	8	10	White	0		1		13		none
+O	door	5	1	none	0		1		3		AND
 
 #player
 #ID	type	x	y	color	maxegg	
-P	player	5	5	white	1
+P	player	5	6	White	1
 
 H "this is messed up..."
 T "07"

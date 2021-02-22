@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 15:07:37 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/21 18:44:48 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/22 01:10:10 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	level_plr_destroy(t_player *plr)
 {
-	free(plr->egg);
+	if (plr->egg)
+		free(plr->egg);
 	free(plr->sprite);
 	free(plr);
 }
@@ -72,6 +73,17 @@ t_level		*level_load(char *lvl_file)
 	return (lvl);
 }
 
+void		level_init_text(t_scene *sc, t_level *lvl)
+{
+	lvl->tm = text_manager_create(FONT_PATH, FONT_SIZE);
+	if (lvl->hint)
+		text_txt_add(sc, lvl->tm, lvl->hint, WHITE);
+//	if (lvl->name)
+//		text_txt_add(sc, lvl->tm, lvl->name, WHITE);
+	text_manager_init_pos_x(sc, lvl->tm);
+	render_text_init_pos_y(sc, lvl);
+}
+
 void		level_destroy(t_level *lvl)
 {
 		level_obj_destroy(lvl->objs);
@@ -81,5 +93,13 @@ void		level_destroy(t_level *lvl)
 			free(lvl->hint);
 		if (lvl->name)
 			free(lvl->name);
+		text_manager_destroy(lvl->tm);
 		free(lvl);
+}
+
+void		level_init(t_scene *sc, t_level *lvl)
+{
+	render_set_offset(sc, lvl);
+	level_init_text(sc, lvl);
+	object_update(lvl->objs);
 }

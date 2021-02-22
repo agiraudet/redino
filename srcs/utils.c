@@ -6,11 +6,18 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 21:52:09 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/21 18:03:29 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/21 23:01:27 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
+
+void		hex_to_sdl_color(int hex, SDL_Color *color)
+{
+	color->r = (hex >> 16) & 0xFF;
+	color->g = (hex >> 8) & 0xFF;
+	color->b = hex & 0xFF;
+}
 
 void		hex_to_rgb(int hex, int *r, int *g, int *b)
 {

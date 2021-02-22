@@ -15,6 +15,7 @@
 # define REDINO_H
 
 # include <stdlib.h>
+# include <math.h>
 # include <string.h>
 # include <fcntl.h>
 # include <unistd.h>
@@ -22,6 +23,7 @@
 # include <sys/stat.h>
 # include <stdio.h>
 # include <SDL2/SDL.h>
+# include <SDL2/SDL_ttf.h>
 # include "settings.h"
 
 typedef struct		s_scene
@@ -35,8 +37,8 @@ typedef struct		s_scene
 
 typedef struct		s_egg
 {
-	int				x;
-	int				y;
+	double			x;
+	double			y;
 	int				frame;
 }					t_egg;
 
@@ -45,8 +47,8 @@ typedef struct		s_player
 	int				frame;
 	int				*sprite;
 	int				*sprite_egg;
-	int				x;
-	int				y;
+	double			x;
+	double			y;
 	int				color;
 	int				egc;
 	int				max_egg;
@@ -78,6 +80,21 @@ typedef struct		s_ctl
 	int				sensor;
 }					t_ctl;
 
+typedef struct		s_txt
+{
+	SDL_Texture		*tex;
+	SDL_Rect		dest;
+	int				pos;
+	char			*name;
+	struct s_txt	*next;
+}					t_txt;
+
+typedef struct		s_text_manager
+{
+	TTF_Font		*font;
+	struct s_txt	*txt;
+}					t_text_manager;
+
 typedef struct		s_level
 {
 	t_obj			*objs;
@@ -85,10 +102,12 @@ typedef struct		s_level
 	int				map_size_x;
 	int				map_size_y;
 	t_player		*plr;
+	t_text_manager	*tm;
 	char			*hint;
 	char			*name;
 }					t_level;
 
+/*
 typedef struct		s_resolution
 {
 	int				wd;
@@ -98,13 +117,16 @@ typedef struct		s_resolution
 	int				map_wd;
 	int				map_hg;
 }					t_resolution;
+*/
 
 /* PLAY */
 int					play_all_level(t_scene *sc, const char *lvl_path);
 int					play_one_level(t_scene *sc, char *lvl_path);
 int					play_level(t_scene *sc, t_level *lvl);
+void				level_init(t_scene *sc, t_level *lvl);
 
 /* UTILS */
+void				hex_to_sdl_color(int hex, SDL_Color *color);
 void				hex_to_rgb(int hex, int *r, int *g, int *b);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				**ft_nsplit(const char *str, const char *sep);
@@ -112,6 +134,7 @@ char				**ft_nsplit(const char *str, const char *sep);
 /* RENDER */
 void				render_level(t_scene *sc , t_level *lvl);
 void				render_set_offset(t_scene *sc, t_level *lvl);
+void				render_text_init_pos_y(t_scene *sc, t_level *lvl);
 
 /* SCENE */
 void				scene_destroy(t_scene *sc);
@@ -120,6 +143,7 @@ t_scene				*scene_create(char *title, int wd, int hg, const char *atlas_path);
 /* LEVEL */
 t_level				*level_load(char *lvl_file);
 void				level_destroy(t_level *lvl);
+void				level_init_text(t_scene *sc, t_level *lvl);
 
 /* EGGS */
 int					egg_drop(t_player *plr);
@@ -140,7 +164,7 @@ void				object_act(t_obj *obj, t_player *plr);
 void				object_add(t_obj **obj_lst, t_obj *obj);
 
 /* PLAYER */
-int					player_is_near(t_obj *obj, t_player *plr);
+int					player_is_near(double plr_x, double plr_y, int x, int y);
 int					player_move(t_level *lvl, SDL_Event event);
 
 /* CONTROLLER */
@@ -158,5 +182,13 @@ void				obj_check_init_fct(t_ctl *ctl, int fct);
 t_level				*loader_lvl_create(void);
 t_level				*loader_parse_file(char *file);
 void				loader_parse_line(t_level *lvl, const char *line);
+
+/* TEXT */
+
+void				text_manager_destroy(t_text_manager *tm);
+void				text_txt_add(t_scene *sc, t_text_manager *tm, const char *str, int hex);
+void				text_txt_add_multiple(t_scene *sc, t_text_manager *tm, char **strs, int hex);
+t_text_manager		*text_manager_create(const char *font_path, int font_size);
+void				text_manager_init_pos_x(t_scene *sc, t_text_manager *tm);
 
 #endif

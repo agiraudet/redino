@@ -1,15 +1,17 @@
-    wwwww
-    w...w
-    w...w
-    w...w
-wwwww...wwwww
-w...........w
-w...........w
-w...........w
-wwwww...wwwww
-    w...w
-    w...w
-    w...w
+    WWWWW
+    WwwwW
+    W...W
+    W...W
+WWWWW...WWWWW
+Wwwww...wwwwW
+W...........W
+W...........W
+W...........W
+WWWWW...WWWWW
+wwwwW...Wwwww
+    W...W
+    W...W
+    WWWWW
     wwwww
 
 #mode:	sensor	&act	&coll	&update
@@ -17,23 +19,23 @@ wwwww...wwwww
 
 #obj
 #ID	type	x	y	color	status	group	mode	logic
-O	lever	2	6	green	0		1		13		none
-O	check	4	5	blue	1		0		2		none
+O	lever	2	7	green	0		1		13		none
 O	check	4	6	blue	1		0		2		none
 O	check	4	7	blue	1		0		2		none
-O	check	8	5	red 	1		0		2		none
+O	check	4	8	blue	1		0		2		none
 O	check	8	6	red 	1		0		2		none
 O	check	8	7	red 	1		0		2		none
-O	check	5	4	white 	1		0		2		none
-O	check	6	4	white	1		0		2		none
-O	check	7	4	white	1		0		2		none
-O	portal	10	6	blue	1		0		2		none
-O	portal	6	10	green	1		0		2		none
-O	portal	6	2	red 	1		0		2		none
-O	door	6	0	none	0		1		3		AND
+O	check	8	8	red 	1		0		2		none
+O	check	5	5	White 	1		0		2		none
+O	check	6	5	White	1		0		2		none
+O	check	7	5	White	1		0		2		none
+O	portal	10	7	blue	1		0		2		none
+O	portal	6	11	green	1		0		2		none
+O	portal	6	3	red 	1		0		2		none
+O	door	6	1	none	0		1		3		AND
 
 #player
 #ID	type	x	y	color	maxegg	
-P	player	6	6	white	3
+P	player	6	7	White	2
 
 T "09"

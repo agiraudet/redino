@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 00:45:29 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/20 04:52:25 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/22 00:14:44 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ void	object_act(t_obj *obj_lst, t_player *plr)
 	while (obj_lst)
 	{
 		if (obj_lst->ctl && obj_lst->ctl->act)
+		{
 			obj_lst->ctl->act(obj_lst, plr);
+		}
 		obj_lst = obj_lst->next;
 	}
 }

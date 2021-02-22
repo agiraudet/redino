@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 16:33:45 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/21 18:45:22 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/22 01:30:04 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,35 @@ void	render_set_offset(t_scene *sc, t_level *lvl)
 	g_offset_y = (sc->hg - lvl->map_size_y * SPRITE_SIZE * SCALE) / 2;
 }
 
+void	render_text_init_pos_y(t_scene *sc, t_level *lvl)
+{
+	t_txt	*txt;
+
+	txt = lvl->tm->txt;
+	while (txt)
+	{
+		printf("%s\n", txt->name);
+		txt->dest.y = sc->hg - g_offset_y / 2 - txt->dest.h / 2;
+		txt = txt->next;
+	}
+}
+
 void	render_gen_sprite(SDL_Rect *sprite, int sprite_nb)
 {
 	sprite->x = (sprite_nb * SPRITE_SIZE) % ATLAS_SIZE;
 	sprite->y = (sprite_nb * SPRITE_SIZE) / ATLAS_SIZE * SPRITE_SIZE;
 	sprite->w = SPRITE_SIZE;
 	sprite->h = SPRITE_SIZE;
+}
+
+void	render_gen_dest(SDL_Rect *dest, double x, double y)
+{
+	dest->x = (int)x * SPRITE_SIZE * SCALE + g_offset_x;
+	dest->x += (x - (int)x) * SPRITE_SIZE * SCALE;
+	dest->y = (int)y * SPRITE_SIZE * SCALE + g_offset_y;
+	dest->y += (y - (int)y) * SPRITE_SIZE * SCALE;
+	dest->w = SPRITE_SIZE * SCALE;
+	dest->h = SPRITE_SIZE * SCALE;
 }
 
 void	render_sprite(t_scene *sc, int sprite_nb, int x, int y)
@@ -40,6 +63,37 @@ void	render_sprite(t_scene *sc, int sprite_nb, int x, int y)
 	dest.h = SPRITE_SIZE * SCALE;
 	render_gen_sprite(&sprite, sprite_nb);
 	SDL_RenderCopy(sc->ren, sc->atlas, &sprite, &dest);
+}
+
+void	render_player(t_scene *sc, t_player *plr)
+{
+	SDL_Rect	dest;
+	SDL_Rect	sprite;
+	int			r, g, b;
+
+	hex_to_rgb(plr->color, &r, &g, &b);
+	SDL_SetTextureColorMod(sc->atlas, r, g, b);
+	render_gen_dest(&dest, plr->x, plr->y);
+	render_gen_sprite(&sprite, plr->sprite[plr->frame]);
+	SDL_RenderCopy(sc->ren, sc->atlas, &sprite, &dest);
+
+	SDL_SetTextureColorMod(sc->atlas, 0xFF, 0xFF, 0xFF);
+}
+
+void	render_egg(t_scene *sc, t_player *plr)
+{
+	SDL_Rect	sprite;
+	SDL_Rect	dest;
+	int		i;
+
+	i = plr->egc - 1;
+	while (i >= 0)
+	{
+		render_gen_dest(&dest, plr->egg[i].x, plr->egg[i].y);
+		render_gen_sprite(&sprite, plr->sprite_egg[plr->frame]);
+		SDL_RenderCopy(sc->ren, sc->atlas, &sprite, &dest);
+		i--;
+	}
 }
 
 void	render_map(t_scene *sc, char **map)
@@ -56,9 +110,11 @@ void	render_map(t_scene *sc, char **map)
 		{
 			sprite_nb = -1;
 			if (map[y][x] == 'w')
-				sprite_nb = 0;
-			else if (map[y][x] == '.')
 				sprite_nb = 1;
+			else if (map[y][x] == '.')
+				sprite_nb = 0;
+			else if (map[y][x] == 'W')
+				sprite_nb = 11;
 			if (sprite_nb != -1)
 				render_sprite(sc, sprite_nb, x, y);
 			x++;
@@ -81,30 +137,16 @@ void	render_objs(t_scene *sc, t_obj *objs)
 	}
 }
 
-void	render_egg(t_scene *sc, t_player *plr)
+void	render_text(t_scene *sc, t_text_manager *tm)
 {
-	int		i;
-	int		r, g, b;
+	t_txt		*txt;
 
-	i = plr->egc - 1;
-	while (i >= 0)
+	txt = tm->txt;
+	while (txt)
 	{
-		hex_to_rgb(plr->color, &r, &g, &b);
-		SDL_SetTextureColorMod(sc->atlas, r, g, b);
-		render_sprite(sc, plr->sprite_egg[plr->egg[i].frame], plr->egg[i].x, plr->egg[i].y);
-		SDL_SetTextureColorMod(sc->atlas, 0xFF, 0xFF, 0xFF);
-		i--;
+		SDL_RenderCopy(sc->ren, txt->tex, 0, &txt->dest);
+		txt = txt->next;
 	}
-}
-
-void	render_player(t_scene *sc, t_player *plr)
-{
-	int		r, g, b;
-
-	hex_to_rgb(plr->color, &r, &g, &b);
-	SDL_SetTextureColorMod(sc->atlas, r, g, b);
-	render_sprite(sc, plr->sprite[plr->frame], plr->x, plr->y);
-	SDL_SetTextureColorMod(sc->atlas, 0xFF, 0xFF, 0xFF);
 }
 
 void	render_level(t_scene *sc, t_level *lvl)
@@ -115,5 +157,6 @@ void	render_level(t_scene *sc, t_level *lvl)
 	render_objs(sc, lvl->objs);
 	render_egg(sc, lvl->plr);
 	render_player(sc ,lvl->plr);
+	render_text(sc, lvl->tm);
 	SDL_RenderPresent(sc->ren);
 }

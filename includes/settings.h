@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 03:56:29 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/21 18:31:29 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/22 00:32:51 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,20 @@
 # define SETTINGS_H
 
 # define TITLE			"redino"
-# define WIN_WD			1280
-# define WIN_HG			720
+# define WIN_WD			800
+# define WIN_HG			800
 # define SCALE			3
+
+# define PLAYER_SPEED	0.5
+# define HITBOX			0.5
 
 # define SPRITE_SIZE	16
 # define ATLAS_SIZE		160
 # define ATLAS_PATH		"assets/atlas.bmp"
 # define LEVEL_PATH		"levels/"
+
+# define FONT_PATH		"assets/TheConfession.ttf"
+# define FONT_SIZE		20
 
 # define GROUND_SPRITE	0
 # define WALL_SPRITE	1
@@ -52,5 +58,7 @@
 # define MARGIN			40
 
 # define COLOR_KEY		0xFF00FF
+
+# define TXT_CENTER		0
 
 #endif

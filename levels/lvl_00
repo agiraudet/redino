@@ -1,14 +1,16 @@
-wwwwwwwwwww
-w.........w
-w.........w
-w.........w
-w.........w
-w.........w
-w.........w
-w.........w
-w.........w
-w.........w
-w.........w
+WWWWWWWWWWW
+WwwwwwwwwwW
+W.........W
+W.........W
+W.........W
+W.........W
+W.........W
+W.........W
+W.........W
+W.........W
+W.........W
+W.........W
+WWWWWWWWWWW
 wwwwwwwwwww
 
 #mode:	sensor	&act	&coll	&update
@@ -16,11 +18,11 @@ wwwwwwwwwww
 
 #obj
 #ID	type	x	y	color	status	group	mode	logic
-O	door	5	0	none	1		0		3		none
+O	door	5	1	none	1		0		3		none
 
 #player
 #ID	type	x	y	color	maxegg	
-P	player	5	5	white	0
+P	player	5	6	white	0
 
 H "Hello."
 T "00"
