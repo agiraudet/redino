@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 00:45:29 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/22 00:14:44 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/23 12:59:55 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	object_destroy(t_obj *obj)
 {
 	if (obj->ctl)
 		ctl_destroy(obj->ctl);
+	free(obj->type);
 	free(obj->sprite);
 	free(obj);
 }

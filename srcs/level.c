@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 15:07:37 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/22 01:10:10 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/22 16:41:03 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ void		level_init_text(t_scene *sc, t_level *lvl)
 	lvl->tm = text_manager_create(FONT_PATH, FONT_SIZE);
 	if (lvl->hint)
 		text_txt_add(sc, lvl->tm, lvl->hint, WHITE);
-//	if (lvl->name)
-//		text_txt_add(sc, lvl->tm, lvl->name, WHITE);
 	text_manager_init_pos_x(sc, lvl->tm);
 	render_text_init_pos_y(sc, lvl);
 }
@@ -89,6 +87,7 @@ void		level_destroy(t_level *lvl)
 		level_obj_destroy(lvl->objs);
 		level_map_destroy(lvl->map);
 		level_plr_destroy(lvl->plr);
+		input_destroy(lvl->inp);
 		if (lvl->hint)
 			free(lvl->hint);
 		if (lvl->name)
@@ -99,6 +98,7 @@ void		level_destroy(t_level *lvl)
 
 void		level_init(t_scene *sc, t_level *lvl)
 {
+	lvl->inp = input_create();
 	render_set_offset(sc, lvl);
 	level_init_text(sc, lvl);
 	object_update(lvl->objs);

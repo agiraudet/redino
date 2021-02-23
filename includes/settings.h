@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 03:56:29 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/22 00:32:51 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/23 16:41:58 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@
 # define WIN_HG			800
 # define SCALE			3
 
-# define PLAYER_SPEED	0.5
-# define HITBOX			0.5
+# define DEBUG_FPS		0
+# define MAX_FPS		60
+
+# define PLAYER_SPEED	0.15
+# define HITBOX			0.8
 
 # define SPRITE_SIZE	16
 # define ATLAS_SIZE		160
 # define ATLAS_PATH		"assets/atlas.bmp"
 # define LEVEL_PATH		"levels/"
 
-# define FONT_PATH		"assets/TheConfession.ttf"
+# define FONT_PATH		"assets/Montserrat-Regular.ttf"
 # define FONT_SIZE		20
 
 # define GROUND_SPRITE	0
@@ -60,5 +63,16 @@
 # define COLOR_KEY		0xFF00FF
 
 # define TXT_CENTER		0
+
+# define KEY_UP			0
+# define KEY_DOWN		1
+
+# define NB_CD			3
+# define ACT_ACT		0
+# define ACT_EGG		1
+# define ACT_HATCH		2
+# define CD_ACT			200
+# define CD_EGG			200
+# define CD_HATCH		200 
 
 #endif

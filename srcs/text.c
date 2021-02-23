@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 21:59:13 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/22 01:36:40 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/23 15:54:26 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void		text_manager_destroy(t_text_manager *tm)
 	text_txt_destroy(tm->txt);
 	free(tm);
 	tm = 0;
-	TTF_Quit();
 }
 
 TTF_Font	*text_font_load(const char *font_path, int font_size)
@@ -46,7 +45,7 @@ TTF_Font	*text_font_load(const char *font_path, int font_size)
 	return (font);
 }
 
-void		text_txt_add(t_scene *sc, t_text_manager *tm, const char *str, int hex)
+t_txt		*text_txt_create(t_scene *sc, t_text_manager *tm, const char *str, int hex)
 {
 	t_txt		*txt;
 	SDL_Surface	*surf;
@@ -55,18 +54,18 @@ void		text_txt_add(t_scene *sc, t_text_manager *tm, const char *str, int hex)
 	hex_to_sdl_color(hex, &color);
 	txt = malloc(sizeof(t_txt));
 	if (!txt)
-		return ;
+		return (0);
 	surf = TTF_RenderText_Solid(tm->font, str, color);
 	if (!surf)
 	{
 		printf("Font error: %s\n", SDL_GetError());
-		return ;
+		return (0);
 	}
 	txt->tex = SDL_CreateTextureFromSurface(sc->ren, surf);
 	if (!txt->tex)
 	{
 		printf("Font error: %s\n", SDL_GetError());
-		return ;
+		return (0);
 	}
 	txt->dest.w = surf->w;
 	txt->dest.h = surf->h;
@@ -75,6 +74,14 @@ void		text_txt_add(t_scene *sc, t_text_manager *tm, const char *str, int hex)
 	txt->pos = TXT_CENTER;
 	txt->name = strdup(str);
 	SDL_FreeSurface(surf);
+	return (txt);
+}
+
+void		text_txt_add(t_scene *sc, t_text_manager *tm, const char *str, int hex)
+{
+	t_txt	*txt;
+
+	txt = text_txt_create(sc, tm, str, hex);
 	txt->next = tm->txt;
 	tm->txt = txt;
 }
@@ -92,8 +99,6 @@ t_text_manager	*text_manager_create(const char *font_path, int font_size)
 {
 	t_text_manager	*tm;
 
-	if (TTF_Init() < 0)
-		return (0);
 	tm = malloc(sizeof(t_text_manager));
 	if (!tm)
 		return (0);

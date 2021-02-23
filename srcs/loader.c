@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 04:45:52 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/21 22:56:25 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/23 12:59:36 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ void	loader_add_obj(t_obj **objs, const char *line)
 		loader_destroy_token(token);
 		return;
 	}
+	obj_tmp->type = ft_strdup(token[1]);
 	obj_tmp->x = atoi(token[2]);
 	obj_tmp->y = atoi(token[3]);
 	obj_tmp->color = loader_get_color(token[4]);
@@ -255,6 +256,7 @@ t_level	*loader_lvl_create(void)
 	lvl->map_size_x = 0;
 	lvl->map_size_y = 0;
 	lvl->tm = 0;
+	lvl->inp = 0;
 	return (lvl);
 }
 

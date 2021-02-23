@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 15:14:47 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/21 22:00:47 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/23 15:55:21 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void		scene_destroy(t_scene *sc)
 	SDL_DestroyWindow(sc->win);
 	SDL_DestroyTexture(sc->atlas);
 	SDL_Quit();
+	TTF_Quit();
 	free(sc);
 	sc = 0;
 }
@@ -44,6 +45,11 @@ t_scene		*scene_create(char *title, int wd, int hg, const char *atlas_path)
 
 	if (SDL_INIT_VIDEO < 0)
 		return (0);
+	if (TTF_Init() < 0)
+	{
+		SDL_Quit();
+		return (0);
+	}
 	if (!(sc = malloc(sizeof(t_scene))))
 	{
 		SDL_Quit();
@@ -68,5 +74,6 @@ t_scene		*scene_create(char *title, int wd, int hg, const char *atlas_path)
 	}
 	sc->wd = wd;
 	sc->hg = hg;
+	timer_init(&sc->time);
 	return (sc);
 }

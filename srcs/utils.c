@@ -6,11 +6,45 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 21:52:09 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/21 23:01:27 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/23 14:48:13 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
+
+static size_t	uint32_t_len(uint32_t nb)
+{
+	size_t	len;
+
+	len = 1;
+	while (nb > 9)
+	{
+		len++;
+		nb /= 10;
+	}
+	return (len);
+}
+
+char		*ft_u32toa(uint32_t n)
+{
+	char	*str;
+	size_t	i;
+
+	i = uint32_t_len(n);
+	str = malloc(sizeof(char) * (i + 1));
+	if (!str)
+		return (0);
+	str[i--] = 0;
+	while (i >= 0)
+	{
+		str[i] = (n % 10) + '0';
+		n /= 10;
+		if (i == 0)
+			break;
+		i--;
+	}
+	return (str);
+}
 
 void		hex_to_sdl_color(int hex, SDL_Color *color)
 {

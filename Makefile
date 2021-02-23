@@ -6,7 +6,7 @@
 #    By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/06 15:43:27 by agiraude          #+#    #+#              #
-#    Updated: 2021/02/21 23:31:33 by agiraude         ###   ########.fr        #
+#    Updated: 2021/02/23 15:30:52 by agiraude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,14 @@ SRCS_FILE		=	main.c \
 					player.c \
 					logic.c \
 					controller.c \
+					timer.c \
 					level.c \
 					render.c \
 					utils.c \
 					egg.c \
 					scene.c \
 					text.c \
+					input.c \
 					loader.c \
 					gnl/get_next_line.c \
 					gnl/get_next_line_utils.c \
