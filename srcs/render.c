@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 16:33:45 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/23 15:51:13 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/23 17:10:46 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	render_text_init_pos_y(t_scene *sc, t_level *lvl)
 {
 	t_txt	*txt;
 
-	txt = lvl->tm->txt;
+	txt = lvl->texts;
 	while (txt)
 	{
 		txt->dest.y = sc->hg - g_offset_y / 2 - txt->dest.h / 2;
@@ -140,11 +140,11 @@ int		render_objs(t_scene *sc, t_obj *objs, t_player *plr)
 	return (player_behind);
 }
 
-void	render_text(t_scene *sc, t_text_manager *tm)
+void	render_text(t_scene *sc, t_txt *texts)
 {
 	t_txt		*txt;
 
-	txt = tm->txt;
+	txt = texts;
 	while (txt)
 	{
 		SDL_RenderCopy(sc->ren, txt->tex, 0, &txt->dest);
@@ -152,15 +152,15 @@ void	render_text(t_scene *sc, t_text_manager *tm)
 	}
 }
 
-void	render_text_variable(t_scene *sc, t_text_manager *tm, char *str)
+void	render_text_variable(t_scene *sc, char *str)
 {
 	t_txt	*txt;
 
-	txt = text_txt_create(sc, tm, str, WHITE);
+	txt = text_create(sc, str, WHITE);
 	txt->dest.x = 10;
 	txt->dest.y = 10;
 	SDL_RenderCopy(sc->ren, txt->tex, 0, &txt->dest);
-	text_txt_destroy(txt);
+	text_destroy(txt);
 	free(str);
 }
 
@@ -174,9 +174,9 @@ void	render_level(t_scene *sc, t_level *lvl)
 	render_player(sc ,lvl->plr);
 	if (!render_objs(sc, lvl->objs, lvl->plr))
 		render_player(sc ,lvl->plr);
-	render_text(sc, lvl->tm);
+	render_text(sc, lvl->texts);
 	if (DEBUG_FPS)
-		render_text_variable(sc, lvl->tm, ft_u32toa(timer_get_fps(&sc->time)));
+		render_text_variable(sc, ft_u32toa(timer_get_fps(&sc->time)));
 	SDL_RenderPresent(sc->ren);
 	timer_cap_fps(&sc->time);
 }

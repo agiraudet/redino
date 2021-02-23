@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 22:42:27 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/23 16:21:49 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/23 17:12:49 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct		s_scene
 	SDL_Window		*win;
 	SDL_Renderer	*ren;
 	SDL_Texture		*atlas;
+	TTF_Font		*font;
 	t_timer			time;
 	int				wd;
 	int				hg;
@@ -98,12 +99,6 @@ typedef struct		s_txt
 	struct s_txt	*next;
 }					t_txt;
 
-typedef struct		s_text_manager
-{
-	TTF_Font		*font;
-	struct s_txt	*txt;
-}					t_text_manager;
-
 typedef struct		s_input
 {
 	int				up;
@@ -134,7 +129,7 @@ typedef struct		s_level
 	int				map_size_x;
 	int				map_size_y;
 	t_player		*plr;
-	t_text_manager	*tm;
+	t_txt			*texts;
 	t_input			*inp;
 	char			*hint;
 	char			*name;
@@ -207,13 +202,11 @@ t_level				*loader_parse_file(char *file);
 void				loader_parse_line(t_level *lvl, const char *line);
 
 /* TEXT */
-void				text_txt_destroy(t_txt *txt);
-t_txt				*text_txt_create(t_scene *sc, t_text_manager *tm, const char *str, int hex);
-void				text_manager_destroy(t_text_manager *tm);
-void				text_txt_add(t_scene *sc, t_text_manager *tm, const char *str, int hex);
-void				text_txt_add_multiple(t_scene *sc, t_text_manager *tm, char **strs, int hex);
-t_text_manager		*text_manager_create(const char *font_path, int font_size);
-void				text_manager_init_pos_x(t_scene *sc, t_text_manager *tm);
+void			text_destroy(t_txt *txt);
+t_txt			*text_create(t_scene *sc, const char *str, int hex);
+void			text_add(t_scene *sc, t_level *lvl, const char *str, int hex);
+void			text_init_pos_x(t_scene *sc, t_txt *texts);
+TTF_Font	*text_font_load(const char *font_path, int font_size);
 
 /* INPUT */
 void				input_destroy(t_input *inp);

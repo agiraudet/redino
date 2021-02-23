@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 03:56:29 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/23 16:41:58 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/23 17:14:54 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define ATLAS_PATH		"assets/atlas.bmp"
 # define LEVEL_PATH		"levels/"
 
-# define FONT_PATH		"assets/Montserrat-Regular.ttf"
+# define FONT_PATH		"assets/TheConfession.ttf"
 # define FONT_SIZE		20
 
 # define GROUND_SPRITE	0

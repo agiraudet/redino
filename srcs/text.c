@@ -6,13 +6,13 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 21:59:13 by agiraude          #+#    #+#             */
-/*   Updated: 2021/02/23 15:54:26 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/02/23 17:12:37 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redino.h"
 
-void		text_txt_destroy(t_txt *txt)
+void		text_destroy(t_txt *txt)
 {
 	t_txt	*tmp;
 	while (txt)
@@ -22,14 +22,7 @@ void		text_txt_destroy(t_txt *txt)
 		txt = txt->next;
 		free(tmp);
 	}
-}
-
-void		text_manager_destroy(t_text_manager *tm)
-{
-	TTF_CloseFont(tm->font);
-	text_txt_destroy(tm->txt);
-	free(tm);
-	tm = 0;
+	txt = 0;
 }
 
 TTF_Font	*text_font_load(const char *font_path, int font_size)
@@ -45,7 +38,7 @@ TTF_Font	*text_font_load(const char *font_path, int font_size)
 	return (font);
 }
 
-t_txt		*text_txt_create(t_scene *sc, t_text_manager *tm, const char *str, int hex)
+t_txt		*text_create(t_scene *sc, const char *str, int hex)
 {
 	t_txt		*txt;
 	SDL_Surface	*surf;
@@ -55,7 +48,7 @@ t_txt		*text_txt_create(t_scene *sc, t_text_manager *tm, const char *str, int he
 	txt = malloc(sizeof(t_txt));
 	if (!txt)
 		return (0);
-	surf = TTF_RenderText_Solid(tm->font, str, color);
+	surf = TTF_RenderText_Solid(sc->font, str, color);
 	if (!surf)
 	{
 		printf("Font error: %s\n", SDL_GetError());
@@ -77,41 +70,20 @@ t_txt		*text_txt_create(t_scene *sc, t_text_manager *tm, const char *str, int he
 	return (txt);
 }
 
-void		text_txt_add(t_scene *sc, t_text_manager *tm, const char *str, int hex)
+void		text_add(t_scene *sc, t_level *lvl, const char *str, int hex)
 {
 	t_txt	*txt;
 
-	txt = text_txt_create(sc, tm, str, hex);
-	txt->next = tm->txt;
-	tm->txt = txt;
+	txt = text_create(sc, str, hex);
+	txt->next = lvl->texts;
+	lvl->texts = txt;
 }
 
-void	text_txt_add_multiple(t_scene *sc, t_text_manager *tm, char **strs, int hex)
-{
-	int		i;
-
-	i = 0;
-	while (strs[i])
-		text_txt_add(sc, tm, strs[i++], hex);
-}
-
-t_text_manager	*text_manager_create(const char *font_path, int font_size)
-{
-	t_text_manager	*tm;
-
-	tm = malloc(sizeof(t_text_manager));
-	if (!tm)
-		return (0);
-	tm->font = text_font_load(font_path, font_size);
-	tm->txt = 0;
-	return (tm);
-}
-
-void			text_manager_init_pos_x(t_scene *sc, t_text_manager *tm)
+void			text_init_pos_x(t_scene *sc, t_txt *texts)
 {
 	t_txt	*txt;
 
-	txt = tm->txt;
+	txt = texts;
 	while (txt)
 	{
 		if (txt->pos == TXT_CENTER)
