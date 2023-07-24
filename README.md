@@ -3,6 +3,8 @@
 Redino (working title) is a puzzle game aimed to have a small scope, but easy to expand on.
 Everything is WIP as of now.
 
+![Redino Screenshot](https://github.com/agiraudet/redino/blob/master/screenshots/redino.png)
+
 ## Installation
 
 In order to compile, you need to have the SDL2 librabry installed on your system.
